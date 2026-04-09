@@ -25,6 +25,7 @@ export default function LandingPage() {
   const ctaTextRef = useRef<HTMLParagraphElement>(null);
 
   const [hovering, setHovering] = useState(false);
+  const [cursorVisible, setCursorVisible] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
   const mousePos = useRef({ x: 0, y: 0 });
 
@@ -39,9 +40,20 @@ export default function LandingPage() {
 
     let dotX = 0, dotY = 0, ringX = 0, ringY = 0;
 
+    let firstMove = true;
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
+      if (firstMove) {
+        // Snap initial cursor positions to where the mouse actually is
+        // so we don't see the lerp slide in from (0, 0).
+        dotX = e.clientX;
+        dotY = e.clientY;
+        ringX = e.clientX;
+        ringY = e.clientY;
+        firstMove = false;
+        setCursorVisible(true);
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
 
@@ -301,16 +313,29 @@ export default function LandingPage() {
 
   return (
     <div className={styles.root}>
-      {/* Custom cursor */}
+      {/* Custom cursor — hidden until first mousemove */}
       <div
         ref={cursorDotRef}
-        className={`${styles.cursorDot} ${hovering ? styles.cursorDotHover : ""}`}
+        className={`${styles.cursorDot} ${cursorVisible ? styles.cursorActive : ""} ${hovering ? styles.cursorDotHover : ""}`}
       />
       <div
         ref={cursorRingRef}
-        className={`${styles.cursorRing} ${hovering ? styles.cursorRingHover : ""}`}
+        className={`${styles.cursorRing} ${cursorVisible ? styles.cursorActive : ""} ${hovering ? styles.cursorRingHover : ""}`}
       />
-      <div ref={cursorThermalRef} className={styles.cursorThermal} />
+      <div
+        ref={cursorThermalRef}
+        className={`${styles.cursorThermal} ${cursorVisible ? styles.cursorActive : ""}`}
+      />
+
+      {/* Background video */}
+      <div className={styles.videoBg}>
+        <video autoPlay muted loop playsInline>
+          <source
+            src="https://videos.pexels.com/video-files/3195440/3195440-uhd_2560_1440_25fps.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
 
       {/* Background layers — grid + noise come from globals body::before/after */}
       <canvas ref={particleCanvasRef} className={styles.particleCanvas} />

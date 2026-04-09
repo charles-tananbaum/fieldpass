@@ -20,19 +20,22 @@ export default function PasswordGate({
   children,
   label = "Protected Demo",
 }: PasswordGateProps) {
-  const [ready, setReady] = useState(false);
+  // Render the gate form by default so the first paint always has content
+  // (no flash of nothing). On mount we check sessionStorage and swap to
+  // children if a session already exists.
   const [unlocked, setUnlocked] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [attempt, setAttempt] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     try {
       const stored = sessionStorage.getItem(GATE_KEY);
       if (stored === GATE_PASSWORD) setUnlocked(true);
     } catch {
       /* ignore */
     }
-    setReady(true);
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -51,8 +54,10 @@ export default function PasswordGate({
     }
   };
 
-  if (!ready) return null;
-  if (unlocked) return <>{children}</>;
+  // Once mounted and unlocked (session exists), render the wrapped children.
+  // Until then, always show the gate form — that way the static HTML at
+  // build time renders the form (no empty flash on first paint).
+  if (mounted && unlocked) return <>{children}</>;
 
   return (
     <div className="min-h-screen flex flex-col">
