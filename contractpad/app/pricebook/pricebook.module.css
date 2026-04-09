@@ -1,0 +1,940 @@
+/* ── Pricebook Demo — styled to match FieldPass landing ── */
+
+.root {
+  position: relative;
+  min-height: 100vh;
+  color: #f0ece4;
+  font-family: "DM Sans", -apple-system, sans-serif;
+  font-size: 15px;
+  z-index: 2;
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(10, 12, 16, 0.72);
+  border-bottom: 1px solid rgba(240, 236, 228, 0.08);
+}
+
+.navBrand {
+  font-family: "Instrument Serif", serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #f0ece4;
+  text-decoration: none;
+}
+
+.navBrand span {
+  color: #e8723a;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navLink {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.5);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #f0ece4;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e8723a;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.navBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(232, 114, 58, 0.35);
+  background: rgba(232, 114, 58, 0.08);
+  color: #e8723a;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.navBadgeDot {
+  width: 6px;
+  height: 6px;
+  background: #e8723a;
+  border-radius: 50%;
+  animation: pulseDot 2s ease infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232, 114, 58, 0.4); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(232, 114, 58, 0); }
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 5rem 2rem 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeUp 0.6s ease;
+}
+
+.heroLabel {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e8723a;
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: #f0ece4;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroTitle em {
+  font-style: italic;
+  background: linear-gradient(135deg, #e8723a 0%, #d4553a 40%, #8a3ae8 80%, #3a8ee8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSub {
+  color: rgba(240, 236, 228, 0.58);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+.thermalBar {
+  width: 90px;
+  height: 2px;
+  background: linear-gradient(135deg, #e8723a 0%, #d4553a 30%, #8a3ae8 60%, #3a8ee8 100%);
+  border-radius: 1px;
+  margin-top: 1.75rem;
+}
+
+/* ── TABS ── */
+.tabs {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.tabRow {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(240, 236, 228, 0.08);
+  margin-bottom: 2.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabRow::-webkit-scrollbar {
+  display: none;
+}
+
+.tabBtn {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  color: rgba(240, 236, 228, 0.4);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.tabBtn:hover {
+  color: rgba(240, 236, 228, 0.85);
+}
+
+.tabBtnActive {
+  color: #f0ece4;
+  border-bottom-color: #e8723a;
+}
+
+.tabBtnNum {
+  color: #e8723a;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+
+.tabPanel {
+  animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── SECTION LABEL ── */
+.sectionLabel {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.42);
+  margin-bottom: 1rem;
+}
+
+/* ── METRICS ── */
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric {
+  background: #181c24;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.metric:hover {
+  border-color: rgba(232, 114, 58, 0.3);
+}
+
+.metricVal {
+  font-family: "Instrument Serif", serif;
+  font-size: 2.75rem;
+  font-weight: 400;
+  color: #f0ece4;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.metricValAccent {
+  background: linear-gradient(135deg, #e8723a, #d4553a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.metricValGood {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.metricLabel {
+  font-size: 0.75rem;
+  color: rgba(240, 236, 228, 0.48);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.metricSub {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4ade80;
+  margin-top: 0.35rem;
+}
+
+/* ── NOTICE ── */
+.notice {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+  border: 1px solid;
+}
+
+.noticeWarn {
+  background: rgba(232, 114, 58, 0.06);
+  color: rgba(255, 180, 140, 0.88);
+  border-color: rgba(232, 114, 58, 0.25);
+}
+
+.noticeGood {
+  background: rgba(74, 222, 128, 0.06);
+  color: rgba(160, 240, 190, 0.88);
+  border-color: rgba(74, 222, 128, 0.22);
+}
+
+.noticeIcon {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.notice strong {
+  color: #f0ece4;
+  font-weight: 500;
+}
+
+/* ── TRANSFORM GRID ── */
+.transformGrid {
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  gap: 0;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.transformArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3.5rem;
+  color: #e8723a;
+  font-size: 1.6rem;
+}
+
+.rawCard,
+.cleanCard {
+  background: #11141a;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cardHeader {
+  padding: 0.85rem 1.1rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(240, 236, 228, 0.08);
+}
+
+.rawCard .cardHeader {
+  background: rgba(232, 114, 58, 0.08);
+  color: #e8723a;
+}
+
+.cleanCard .cardHeader {
+  background: rgba(74, 222, 128, 0.08);
+  color: #4ade80;
+}
+
+.rawList {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem 1.1rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.72rem;
+  line-height: 2;
+  color: rgba(240, 236, 228, 0.78);
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.rawItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
+}
+
+.warnDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e8723a;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(232, 114, 58, 0.4);
+}
+
+.okDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(240, 236, 228, 0.3);
+  flex-shrink: 0;
+}
+
+/* ── PRICEBOOK TABLE ── */
+.pbTableWrap {
+  background: #11141a;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pbTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.pbTable th {
+  text-align: left;
+  padding: 12px 14px;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.55rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.42);
+  border-bottom: 1px solid rgba(240, 236, 228, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.pbTable td {
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(240, 236, 228, 0.05);
+  vertical-align: middle;
+  color: rgba(240, 236, 228, 0.82);
+}
+
+.pbTable tr:last-child td {
+  border-bottom: none;
+}
+
+.pbTable tbody tr {
+  transition: background 0.2s ease;
+}
+
+.pbTable tbody tr:hover td {
+  background: rgba(232, 114, 58, 0.04);
+}
+
+.pbCode {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.65rem;
+  color: rgba(240, 236, 228, 0.42);
+}
+
+.pbName {
+  font-weight: 500;
+  color: #f0ece4;
+  margin-bottom: 2px;
+}
+
+.pbDesc {
+  font-size: 0.7rem;
+  color: rgba(240, 236, 228, 0.45);
+  font-style: italic;
+}
+
+.pbPrice {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #4ade80;
+  white-space: nowrap;
+}
+
+.pbHours {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.7rem;
+  color: rgba(240, 236, 228, 0.48);
+}
+
+.confHigh {
+  font-family: "Geist Mono", monospace;
+  color: #4ade80;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+}
+
+.confMed {
+  font-family: "Geist Mono", monospace;
+  color: #f59e0b;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+}
+
+.pbMore {
+  text-align: center;
+  padding: 14px;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.42);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Category badges */
+.catBadge {
+  display: inline-block;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.55rem;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid;
+}
+
+.catDiag { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
+.catCap { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border-color: rgba(167, 139, 250, 0.3); }
+.catMaint { background: rgba(74, 222, 128, 0.1); color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+.catRefrig { background: rgba(96, 165, 250, 0.1); color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); }
+.catWire { background: rgba(236, 72, 153, 0.1); color: #f472b6; border-color: rgba(236, 72, 153, 0.3); }
+.catMotor { background: rgba(234, 179, 8, 0.1); color: #facc15; border-color: rgba(234, 179, 8, 0.3); }
+.catComp { background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+.catEmerg { background: rgba(249, 115, 22, 0.12); color: #fb923c; border-color: rgba(249, 115, 22, 0.3); }
+
+/* ── MAINTENANCE PLANS ── */
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.planCard {
+  background: #11141a;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  padding: 0;
+  font-family: inherit;
+  color: inherit;
+}
+
+.planCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  border-color: rgba(232, 114, 58, 0.3);
+}
+
+.planCardFeatured {
+  border-color: rgba(232, 114, 58, 0.5);
+  border-width: 1px;
+  background: linear-gradient(160deg, rgba(232, 114, 58, 0.12) 0%, #11141a 70%);
+  box-shadow: 0 0 40px rgba(232, 114, 58, 0.08);
+}
+
+.planCardFeatured:hover {
+  border-color: #e8723a;
+  box-shadow: 0 12px 36px rgba(232, 114, 58, 0.2);
+}
+
+.planHeader {
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-bottom: 1px solid rgba(240, 236, 228, 0.08);
+}
+
+.planBadge {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.55rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.42);
+  margin-bottom: 0.6rem;
+}
+
+.planCardFeatured .planBadge {
+  color: #e8723a;
+}
+
+.planName {
+  font-family: "Instrument Serif", serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #f0ece4;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.planPrice {
+  font-family: "Instrument Serif", serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #f0ece4;
+  line-height: 1;
+}
+
+.planCardFeatured .planPrice {
+  background: linear-gradient(135deg, #e8723a, #d4553a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.planPrice span {
+  font-size: 0.75rem;
+  color: rgba(240, 236, 228, 0.4);
+  font-weight: 400;
+  font-family: "Geist Mono", monospace;
+  letter-spacing: 0.05em;
+  -webkit-text-fill-color: rgba(240, 236, 228, 0.4);
+}
+
+.planBody {
+  padding: 1.25rem 1.5rem;
+}
+
+.planItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: rgba(240, 236, 228, 0.78);
+  margin-bottom: 0.65rem;
+  line-height: 1.45;
+}
+
+.planItem::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8723a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 2px;
+}
+
+.planFooter {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.planBtn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(240, 236, 228, 0.14);
+  background: transparent;
+  border-radius: 8px;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: rgba(240, 236, 228, 0.78);
+  transition: all 0.25s ease;
+}
+
+.planBtn:hover {
+  background: rgba(232, 114, 58, 0.08);
+  color: #e8723a;
+  border-color: #e8723a;
+}
+
+.planCardFeatured .planBtn {
+  background: rgba(232, 114, 58, 0.12);
+  color: #e8723a;
+  border-color: rgba(232, 114, 58, 0.4);
+}
+
+.planCardFeatured .planBtn:hover {
+  background: #e8723a;
+  color: #0a0c10;
+  border-color: #e8723a;
+}
+
+/* ── TECH SCRIPT ── */
+.scriptCard {
+  background: #11141a;
+  border: 1px solid rgba(232, 114, 58, 0.2);
+  border-radius: 12px;
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+  animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scriptStep {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.scriptStep:last-child {
+  margin-bottom: 0;
+}
+
+.stepNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(232, 114, 58, 0.12);
+  border: 1px solid rgba(232, 114, 58, 0.4);
+  color: #e8723a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.stepTitle {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(240, 236, 228, 0.58);
+  margin-bottom: 0.5rem;
+}
+
+.stepText {
+  font-family: "Instrument Serif", serif;
+  font-size: 1.1rem;
+  color: rgba(240, 236, 228, 0.82);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.stepText strong {
+  color: #e8723a;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ── INVOICE COMPARISON ── */
+.invoiceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.invoiceCard {
+  background: #11141a;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.invoiceHeader {
+  padding: 0.85rem 1.1rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(240, 236, 228, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.invoiceBefore .invoiceHeader {
+  background: rgba(232, 114, 58, 0.08);
+  color: #e8723a;
+}
+
+.invoiceAfter .invoiceHeader {
+  background: rgba(74, 222, 128, 0.08);
+  color: #4ade80;
+}
+
+.invoiceBody {
+  padding: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.9;
+}
+
+.invoiceLine {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(240, 236, 228, 0.1);
+  padding: 6px 0;
+  font-family: "DM Sans", sans-serif;
+}
+
+.invoiceLine:last-child {
+  border-bottom: none;
+}
+
+.invoiceLineMessy {
+  color: rgba(232, 114, 58, 0.82);
+  font-style: italic;
+}
+
+.invoiceLineClean {
+  color: rgba(240, 236, 228, 0.85);
+}
+
+.invoiceLineClean span:last-child {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.82rem;
+  color: #4ade80;
+}
+
+.invoiceTotal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid rgba(240, 236, 228, 0.16);
+  font-family: "Instrument Serif", serif;
+  font-size: 1.15rem;
+  color: #f0ece4;
+}
+
+.invoiceTotal span:last-child {
+  font-family: "Geist Mono", monospace;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.invoiceFoot {
+  padding: 0.85rem 1.1rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  border-top: 1px solid rgba(240, 236, 228, 0.08);
+  line-height: 1.5;
+}
+
+.invoiceBefore .invoiceFoot {
+  background: rgba(232, 114, 58, 0.06);
+  color: rgba(255, 180, 140, 0.78);
+}
+
+.invoiceAfter .invoiceFoot {
+  background: rgba(74, 222, 128, 0.06);
+  color: rgba(160, 240, 190, 0.78);
+}
+
+/* ── OUTCOMES BOX ── */
+.outcomesBox {
+  background: #11141a;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 12px;
+  padding: 1.75rem;
+  margin-top: 1rem;
+}
+
+.outcomesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  font-size: 0.82rem;
+}
+
+.outcomeTitle {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: #e8723a;
+  margin-bottom: 0.35rem;
+}
+
+.outcomeText {
+  color: rgba(240, 236, 228, 0.58);
+  line-height: 1.55;
+}
+
+/* ── FOOTER ── */
+.footer {
+  max-width: 1000px;
+  margin: 3rem auto 0;
+  padding: 2rem 2rem 3rem;
+  border-top: 1px solid rgba(240, 236, 228, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerText {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.3);
+}
+
+.footerText strong {
+  color: rgba(240, 236, 228, 0.65);
+  font-weight: 500;
+}
+
+.footerAccent {
+  color: #e8723a;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .transformGrid { grid-template-columns: 1fr; }
+  .transformArrow {
+    padding: 1rem 0;
+    transform: rotate(90deg);
+  }
+  .plansGrid { grid-template-columns: 1fr; }
+  .metricsRow { grid-template-columns: repeat(2, 1fr); }
+  .invoiceGrid { grid-template-columns: 1fr; }
+  .outcomesGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .nav { padding: 1rem 1.25rem; }
+  .navRight { gap: 1rem; }
+  .hero { padding: 3rem 1.25rem 2rem; }
+  .tabs { padding: 0 1.25rem; }
+  .footer { padding: 1.5rem 1.25rem 2rem; flex-direction: column; gap: 0.75rem; }
+}

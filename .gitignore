@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / tooling state
+.claude/
+.vscode/
+.idea/
+
+# Node
+node_modules/
+
+# Next.js build artifacts
+.next/
+out/
+.vercel/
+
+# Reference docs / source files (kept locally, ported into the app)
+*.docx
+*.xlsx
+~$*
+FieldPass_Demo_James.html
+
+# Logs
+*.log
+npm-debug.log*
