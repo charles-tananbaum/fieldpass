@@ -445,14 +445,6 @@ export default function LandingPage() {
           >
             Learn More <span className={styles.ctaArrow}>→</span>
           </a>
-          <Link
-            href="/contractpad"
-            className={`${styles.ctaBtn} ${styles.ctaBtnSecondary}`}
-            onMouseEnter={() => setHovering(true)}
-            onMouseLeave={() => setHovering(false)}
-          >
-            Try ContractPad Demo <span className={styles.ctaArrow}>→</span>
-          </Link>
         </div>
 
         <div className={styles.bottomStrip}>
