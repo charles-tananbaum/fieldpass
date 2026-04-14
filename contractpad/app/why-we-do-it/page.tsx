@@ -23,7 +23,7 @@ const STATS = [
       </svg>
     ),
     title: "Money Saved",
-    desc: "Traditional implementation firms charge $60k+ for work that should cost a fraction. We fix that.",
+    desc: "The companies that set up your software charge $60k+ for work that should cost a fraction. We fix that.",
   },
   {
     icon: (
@@ -50,14 +50,13 @@ export default function WhyWeDoItPage() {
         <div className={styles.heroGlow} />
         <div className={styles.label}>Our Mission</div>
         <p className={styles.statement}>
-          HVAC operators and techs spend <em>too much time</em> wrestling
-          software systems when they should be out growing their business and
-          satisfying their customers. Implementation firms charge{" "}
-          <em>too much money</em> to give operators the ROI they deserve.{" "}
-          <strong>FieldPass</strong> works holistically with operators to find
-          where AI, automation, and modern software can save them time, money,
-          and headaches — then we educate them on how to use it, and implement
-          it ourselves.
+          HVAC operators and techs spend <em>too much time</em> stuck in
+          software when they should be out running jobs and taking care of
+          customers. The companies that set up this software charge{" "}
+          <em>too much money</em> to give operators the return they deserve.{" "}
+          <strong>FieldPass</strong> sits down with operators to figure out
+          where better tools can save them time, money, and headaches — then
+          we teach them how to use it, and set it up ourselves.
         </p>
         <div className="thermal-divider mx-auto mt-10" />
       </section>
@@ -84,8 +83,8 @@ export default function WhyWeDoItPage() {
         >
           We don't just sell software — we sit down with operators, learn their
           workflows, and build around them. The result is a business that runs
-          smoother, grows faster, and lets <strong>you</strong> focus on what
-          you're best at.
+          smoother, grows faster, and lets <strong>you</strong> focus on
+          running jobs and growing your book.
         </p>
       </section>
     </PageLayout>

@@ -483,10 +483,9 @@ export default function LandingPage() {
             ctaVisible ? styles.ctaSectionTextVisible : ""
           }`}
         >
-          <strong>Jack, Kunal, and Charles</strong> built FieldPass at{" "}
-          <strong>Harvard Business School</strong> to help HVAC operators{" "}
-          <em>modernize at scale.</em> Your next chapter starts when the
-          clipboard becomes a dashboard. Let's get you there.
+          <strong>Jack, Kunal, and Charles</strong> started FieldPass to help
+          HVAC companies stop wasting time on bad software. Your next chapter
+          starts when the clipboard becomes a dashboard. Let's get you there.
         </p>
         <a
           href="mailto:ctananbaum@mba2027.hbs.edu"

@@ -20,7 +20,7 @@ interface ServiceSection {
 const SECTIONS: ServiceSection[] = [
   {
     number: "01",
-    title: <>Bespoke <em>Automations</em></>,
+    title: <>Custom <em>Automations</em></>,
     desc: "We build custom automations for HVAC operators — invoice generation, booking workflows, pricebook matching, dispatch optimization, and recurring payment management. If your team is doing it manually and repeatedly, we can make it happen automatically.",
     image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
     imageAlt: "Automation workflow on screen",
@@ -86,8 +86,8 @@ export default function WhatWeDoPage() {
         </h1>
         <div className="thermal-divider mx-auto mb-6" />
         <p className={styles.heroSub}>
-          Five ways we help HVAC operators modernize — from automating their
-          back office to rebuilding their web presence.
+          Five ways we help HVAC businesses run better — from automating
+          your back office to rebuilding your website.
         </p>
       </section>
 

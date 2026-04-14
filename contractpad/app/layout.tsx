@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "FieldPass — Transform Your HVAC Services",
   description:
-    "AI-assisted FSM implementation helping HVAC operators modernize at scale. Includes the ContractPad demo.",
+    "Software and automation tools built for HVAC businesses.",
 };
 
 export const viewport: Viewport = {

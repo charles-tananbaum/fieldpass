@@ -9,7 +9,7 @@ const FOUNDERS = [
     photo: "/founders/jack.png",
     name: "Jack",
     role: "Co-Founder · Strategy",
-    bio: "Jack spent four years at KKR learning the HVAC space from the inside, investing directly in field management platforms and watching firsthand how operators struggle with fragmented software. That front-row seat to the industry's pain points is what drives FieldPass's strategy today.",
+    bio: "Jack spent four years working with HVAC contractors and field service businesses, learning the real challenges operators face with scheduling, dispatching, and back-office software. That hands-on experience is what drives FieldPass today.",
     hoverClass: styles.cardWarm,
     dividerClass: styles.cardDividerWarm,
   },
@@ -17,7 +17,7 @@ const FOUNDERS = [
     photo: "/founders/kunal.jpeg",
     name: "Kunal",
     role: "Co-Founder · Product",
-    bio: "Kunal brings four years of product management and engineering experience at Yahoo, where he led their audience targeting platform. He's currently building product at Virtualitics, a venture-backed startup managing critical data infrastructure — and channels that same obsession with complex-made-simple into FieldPass's tools.",
+    bio: "Kunal spent four years building software products used by millions of people. He's spent his career making complicated technology simple and useful — and that's exactly what he does at FieldPass.",
     hoverClass: styles.cardCool,
     dividerClass: styles.cardDividerCool,
   },
@@ -25,7 +25,7 @@ const FOUNDERS = [
     photo: "/founders/charles.jpeg",
     name: "Charles",
     role: "Co-Founder · Operations",
-    bio: "Charles worked as a venture capitalist at Accel, investing in cutting-edge AI and developer tools. He went on to lead strategy for Laravel after their $57M Series A, driving partnerships and growth. He brings that operator-meets-investor lens to FieldPass, making sure every product decision ties back to real business impact.",
+    bio: "Charles spent years evaluating and working with software companies, figuring out what actually works and what's just hype. He helped grow one of the most popular software platforms in the world, leading partnerships and business development. At FieldPass, he makes sure everything we build actually saves you time and money — no fluff.",
     hoverClass: styles.cardPurple,
     dividerClass: styles.cardDividerPurple,
   },
@@ -46,8 +46,8 @@ export default function WhoWeArePage() {
         </h1>
         <div className="thermal-divider mx-auto mb-6" />
         <p className={styles.heroSub}>
-          Three builders from Harvard Business School, on a mission to
-          modernize the trades that keep everything running.
+          Three guys who met in school and decided to fix the way HVAC
+          businesses run their software.
         </p>
       </section>
 
@@ -80,8 +80,8 @@ export default function WhoWeArePage() {
           ref={banner.ref}
           className={`${styles.bannerText} ${banner.isVisible ? styles.visible : ""}`}
         >
-          Built at <strong>Harvard Business School</strong> for local HVAC
-          operators who deserve better tools, better service, and a better deal.
+          We started FieldPass because HVAC operators deserve better tools,
+          better service, and a better deal — without the six-figure price tag.
         </p>
       </section>
     </PageLayout>
