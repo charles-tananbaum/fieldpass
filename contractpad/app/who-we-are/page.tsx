@@ -6,29 +6,26 @@ import styles from "./who-we-are.module.css";
 
 const FOUNDERS = [
   {
-    initial: "J",
+    photo: "/founders/jack.png",
     name: "Jack",
     role: "Co-Founder · Strategy",
-    bio: "Background in field services and PE-backed operator growth. Spent years watching HVAC companies struggle with the same software migration problems — and decided to fix it.",
-    avatarClass: styles.avatarWarm,
+    bio: "Jack spent four years at KKR learning the HVAC space from the inside, investing directly in field management platforms and watching firsthand how operators struggle with fragmented software. That front-row seat to the industry's pain points is what drives FieldPass's strategy today.",
     hoverClass: styles.cardWarm,
     dividerClass: styles.cardDividerWarm,
   },
   {
-    initial: "K",
+    photo: "/founders/kunal.jpeg",
     name: "Kunal",
     role: "Co-Founder · Product",
-    bio: "Engineer turned product builder. Obsessed with taking complex workflows and making them feel effortless. Believes every tech should be able to run their tools, not the other way around.",
-    avatarClass: styles.avatarCool,
+    bio: "Kunal brings four years of product management and engineering experience at Yahoo, where he led their audience targeting platform. He's currently building product at Virtualitics, a venture-backed startup managing critical data infrastructure — and channels that same obsession with complex-made-simple into FieldPass's tools.",
     hoverClass: styles.cardCool,
     dividerClass: styles.cardDividerCool,
   },
   {
-    initial: "C",
+    photo: "/founders/charles.jpeg",
     name: "Charles",
     role: "Co-Founder · Operations",
-    bio: "Operator at heart. Has sat in the back office of a contractor and watched invoices get re-keyed three times. Built FieldPass to make that a thing of the past.",
-    avatarClass: styles.avatarPurple,
+    bio: "Charles worked as a venture capitalist at Accel, investing in cutting-edge AI and developer tools. He went on to lead strategy for Laravel after their $57M Series A, driving partnerships and growth. He brings that operator-meets-investor lens to FieldPass, making sure every product decision ties back to real business impact.",
     hoverClass: styles.cardPurple,
     dividerClass: styles.cardDividerPurple,
   },
@@ -64,9 +61,12 @@ export default function WhoWeArePage() {
             }`}
             style={staggerDelay(i)}
           >
-            <div className={`${styles.avatar} ${f.avatarClass}`}>
-              {f.initial}
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={f.photo}
+              alt={f.name}
+              className={styles.avatar}
+            />
             <div className={styles.name}>{f.name}</div>
             <div className={styles.role}>{f.role}</div>
             <p className={styles.bio}>{f.bio}</p>

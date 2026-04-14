@@ -65,31 +65,19 @@
 .cardPurple:hover { border-color: rgba(138, 58, 232, 0.35); }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   margin: 0 auto 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Instrument Serif", serif;
-  font-size: 2.5rem;
-  color: #f0ece4;
+  object-fit: cover;
+  border: 2px solid rgba(240, 236, 228, 0.12);
+  filter: saturate(0.85) contrast(1.05);
+  transition: border-color 0.4s ease, filter 0.4s ease;
 }
 
-.avatarWarm {
-  background: linear-gradient(145deg, rgba(232, 114, 58, 0.2), rgba(212, 85, 58, 0.08));
-  border: 1.5px solid rgba(232, 114, 58, 0.35);
-}
-
-.avatarCool {
-  background: linear-gradient(145deg, rgba(58, 142, 232, 0.2), rgba(58, 107, 232, 0.08));
-  border: 1.5px solid rgba(58, 142, 232, 0.35);
-}
-
-.avatarPurple {
-  background: linear-gradient(145deg, rgba(138, 58, 232, 0.2), rgba(138, 58, 232, 0.08));
-  border: 1.5px solid rgba(138, 58, 232, 0.35);
+.card:hover .avatar {
+  filter: saturate(1) contrast(1.05);
+  border-color: rgba(232, 114, 58, 0.4);
 }
 
 .name {
