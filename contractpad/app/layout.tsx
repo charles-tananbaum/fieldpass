@@ -5,6 +5,28 @@ export const metadata: Metadata = {
   title: "FieldPass — Transform Your HVAC Services",
   description:
     "Software and automation tools built for HVAC businesses.",
+  openGraph: {
+    title: "FieldPass — Transform Your HVAC Services",
+    description:
+      "We help HVAC operators save time, money, and headaches with better software, custom automations, and hands-on support.",
+    type: "website",
+    siteName: "FieldPass",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "FieldPass — Transform Your HVAC Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FieldPass — Transform Your HVAC Services",
+    description:
+      "We help HVAC operators save time, money, and headaches with better software, custom automations, and hands-on support.",
+    images: ["/og.png"],
+  },
 };
 
 export const viewport: Viewport = {
