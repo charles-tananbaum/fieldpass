@@ -1,0 +1,172 @@
+.hero {
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #f0ece4;
+  margin-bottom: 1rem;
+}
+
+.heroTitle em {
+  font-style: italic;
+  color: #e8723a;
+}
+
+.heroSub {
+  font-size: 1rem;
+  color: rgba(240, 236, 228, 0.5);
+  line-height: 1.65;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+.card {
+  position: relative;
+  background: #181c24;
+  border: 1px solid rgba(240, 236, 228, 0.08);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s ease,
+              border-color 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  /* Scroll reveal */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease,
+              box-shadow 0.5s ease, border-color 0.4s ease;
+}
+
+.cardWarm:hover {
+  border-color: rgba(232, 114, 58, 0.4);
+  box-shadow: 0 12px 40px rgba(232, 114, 58, 0.12);
+  transform: translateY(-6px);
+}
+
+.cardCool:hover {
+  border-color: rgba(58, 142, 232, 0.4);
+  box-shadow: 0 12px 40px rgba(58, 142, 232, 0.12);
+  transform: translateY(-6px);
+}
+
+.cardImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  filter: saturate(0.6) contrast(1.1);
+  border-bottom: 1px solid rgba(240, 236, 228, 0.06);
+}
+
+.cardBody {
+  padding: 1.75rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardLabel {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.cardLabelWarm { color: #e8723a; }
+.cardLabelCool { color: #3a8ee8; }
+
+.cardTitle {
+  font-family: "Instrument Serif", serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #f0ece4;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.cardDesc {
+  font-size: 0.88rem;
+  color: rgba(240, 236, 228, 0.55);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+
+.cardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(240, 236, 228, 0.12);
+  color: rgba(240, 236, 228, 0.7);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.cardWarm .cardCta:hover {
+  background: rgba(232, 114, 58, 0.1);
+  border-color: #e8723a;
+  color: #e8723a;
+}
+
+.cardCool .cardCta:hover {
+  background: rgba(58, 142, 232, 0.1);
+  border-color: #3a8ee8;
+  color: #3a8ee8;
+}
+
+.cardArrow {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .cardArrow {
+  transform: translateX(4px);
+}
+
+.lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 228, 0.3);
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; padding: 0 1.25rem 4rem; }
+  .hero { padding: 6rem 1.25rem 3rem; }
+}

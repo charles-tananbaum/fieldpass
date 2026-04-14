@@ -27,6 +27,7 @@ export default function LandingPage() {
   const [hovering, setHovering] = useState(false);
   const [cursorVisible, setCursorVisible] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const mousePos = useRef({ x: 0, y: 0 });
 
   // Cursor + particle + orb system
@@ -347,28 +348,68 @@ export default function LandingPage() {
           Field<span>Pass</span>
         </div>
         <div className={styles.navLinks}>
-          <Link
-            href="/contractpad"
-            className={styles.navLink}
-            onMouseEnter={() => setHovering(true)}
-            onMouseLeave={() => setHovering(false)}
-          >
-            ContractPad
-          </Link>
-          <Link
-            href="/pricebook"
-            className={styles.navLink}
-            onMouseEnter={() => setHovering(true)}
-            onMouseLeave={() => setHovering(false)}
-          >
-            Pricebook
-          </Link>
+          {[
+            { href: "/who-we-are", label: "Who We Are" },
+            { href: "/what-we-do", label: "What We Do" },
+            { href: "/why-we-do-it", label: "Why" },
+            { href: "/demos", label: "Demos" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={styles.navLink}
+              onMouseEnter={() => setHovering(true)}
+              onMouseLeave={() => setHovering(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
           <div className={styles.navStatus}>
             <div className={styles.statusDot} />
             <span>Accepting Partners</span>
           </div>
         </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          <span className={styles.hamburgerLine} />
+          <span className={styles.hamburgerLine} />
+          <span className={styles.hamburgerLine} />
+        </button>
       </nav>
+
+      {/* Mobile overlay */}
+      {menuOpen && (
+        <div className={styles.mobileOverlay}>
+          {[
+            { href: "/who-we-are", label: "Who We Are" },
+            { href: "/what-we-do", label: "What We Do" },
+            { href: "/why-we-do-it", label: "Why We Do It" },
+            { href: "/demos", label: "Demos" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={styles.mobileOverlayLink}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className={styles.mobileOverlayDivider} />
+          <a
+            href="mailto:ctananbaum@mba2027.hbs.edu"
+            className={styles.mobileOverlayLink}
+            onClick={() => setMenuOpen(false)}
+          >
+            Contact Us
+          </a>
+        </div>
+      )}
 
       {/* Hero */}
       <section className={styles.hero}>

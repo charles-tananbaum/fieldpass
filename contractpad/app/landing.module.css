@@ -582,9 +582,87 @@
 }
 
 /* ── Responsive ── */
+/* ── Landing hamburger ── */
+.hamburger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: rgba(240, 236, 228, 0.7);
+  cursor: none;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 101;
+}
+
+.hamburgerLine {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobileOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 12, 16, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  animation: overlayIn 0.3s ease;
+}
+
+.mobileOverlayLink {
+  font-family: "Instrument Serif", serif;
+  font-size: 2rem;
+  color: rgba(240, 236, 228, 0.65);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  letter-spacing: -0.01em;
+}
+
+.mobileOverlayLink:hover { color: #f0ece4; }
+
+.mobileOverlayDivider {
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(135deg, #e8723a 0%, #d4553a 30%, #8a3ae8 60%, #3a8ee8 100%);
+  border-radius: 1px;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @media (max-width: 768px) {
-  .nav { padding: 1rem 1.5rem; }
-  .navLinks { gap: 1rem; }
+  .nav { padding: 1rem 1.25rem; }
+  .navLinks { display: none; }
+  .hamburger { display: flex; }
   .hero { padding: 6rem 1.5rem 5rem; }
   .bottomStrip {
     padding: 1rem 1.5rem;
@@ -593,6 +671,6 @@
   }
   .marqueeContainer { display: none; }
   .ctaSection { padding: 4rem 1.5rem 3rem; }
-  .root { cursor: auto; }
+  .root, .root * { cursor: auto !important; }
   .cursorDot, .cursorRing, .cursorThermal { display: none; }
 }
