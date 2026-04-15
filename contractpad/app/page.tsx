@@ -332,7 +332,7 @@ export default function LandingPage() {
       <div className={styles.videoBg}>
         <video autoPlay muted loop playsInline preload="none">
           <source
-            src="https://videos.pexels.com/video-files/5327934/5327934-sd_640_360_25fps.mp4"
+            src="https://videos.pexels.com/video-files/5327935/5327935-sd_640_360_30fps.mp4"
             type="video/mp4"
           />
         </video>
