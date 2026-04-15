@@ -330,9 +330,9 @@ export default function LandingPage() {
 
       {/* Background video */}
       <div className={styles.videoBg}>
-        <video autoPlay muted loop playsInline>
+        <video autoPlay muted loop playsInline preload="none">
           <source
-            src="https://videos.pexels.com/video-files/3195440/3195440-uhd_2560_1440_25fps.mp4"
+            src="https://videos.pexels.com/video-files/31373753/13387889_640_360_50fps.mp4"
             type="video/mp4"
           />
         </video>

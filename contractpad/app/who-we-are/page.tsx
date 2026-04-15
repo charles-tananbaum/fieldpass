@@ -6,7 +6,7 @@ import styles from "./who-we-are.module.css";
 
 const FOUNDERS = [
   {
-    photo: "/founders/jack.png",
+    photo: "/founders/jack.jpeg",
     name: "Jack",
     role: "Co-Founder · Strategy",
     bio: "Jack spent four years working with HVAC contractors and field service businesses, learning the real challenges operators face with scheduling, dispatching, and back-office software. That hands-on experience is what drives FieldPass today.",
@@ -66,6 +66,9 @@ export default function WhoWeArePage() {
               src={f.photo}
               alt={f.name}
               className={styles.avatar}
+              width={240}
+              height={240}
+              loading="lazy"
             />
             <div className={styles.name}>{f.name}</div>
             <div className={styles.role}>{f.role}</div>

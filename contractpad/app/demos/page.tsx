@@ -65,6 +65,8 @@ export default function DemosPage() {
               alt={demo.imageAlt}
               className={styles.cardImage}
               loading="lazy"
+              width={800}
+              height={400}
             />
             <div className={styles.cardBody}>
               <div className={`${styles.cardLabel} ${demo.labelClass}`}>

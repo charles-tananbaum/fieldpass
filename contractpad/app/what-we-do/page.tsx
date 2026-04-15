@@ -117,7 +117,7 @@ function ServiceBlock({
       >
         <div className={styles.imageWrap}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={s.image} alt={s.imageAlt} loading="lazy" />
+          <img src={s.image} alt={s.imageAlt} loading="lazy" width={800} height={600} />
           <div className={`${styles.imageBadge} ${s.badgeClass}`}>
             {s.badgeLabel}
           </div>
