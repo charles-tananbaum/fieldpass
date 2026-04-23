@@ -43,10 +43,6 @@ export default function LandingPage() {
     };
   }, []);
 
-  // Check for fine pointer (real mouse) vs touch/trackpad-only
-  const hasFinePointer = typeof window !== "undefined"
-    && window.matchMedia("(pointer: fine)").matches;
-
   // Unified cursor + particle + orb loop
   useEffect(() => {
     const dot = cursorDotRef.current;
@@ -58,10 +54,6 @@ export default function LandingPage() {
 
     // Detect fine pointer — only show custom cursor for real mouse devices
     const finePointer = window.matchMedia("(pointer: fine)").matches;
-    if (!finePointer) {
-      // Immediately show native cursor, skip custom cursor entirely
-      document.documentElement.classList.add("no-custom-cursor");
-    }
 
     let dotX = 0, dotY = 0, ringX = 0, ringY = 0;
 
@@ -75,7 +67,11 @@ export default function LandingPage() {
         ringX = e.clientX;
         ringY = e.clientY;
         firstMove = false;
-        if (finePointer) setCursorVisible(true);
+        if (finePointer) {
+          setCursorVisible(true);
+          // Hide native cursor only now that custom cursor is visible
+          document.documentElement.classList.add("cursor-active");
+        }
       }
     };
     window.addEventListener("mousemove", handleMouseMove);
@@ -303,7 +299,7 @@ export default function LandingPage() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", resizeParticleCanvas);
       cancelAnimationFrame(rafId);
-      document.documentElement.classList.remove("no-custom-cursor");
+      document.documentElement.classList.remove("cursor-active");
     };
   }, []);
 
