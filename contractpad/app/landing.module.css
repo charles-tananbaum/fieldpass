@@ -8,14 +8,17 @@
   font-family: "DM Sans", -apple-system, sans-serif;
 }
 
-.root, .root * {
-  cursor: none !important;
+/* Only hide native cursor on devices with a precise pointer (real mouse) */
+@media (pointer: fine) {
+  .root, .root * {
+    cursor: none !important;
+  }
 }
 
-@media (max-width: 768px) {
-  .root, .root * {
-    cursor: auto !important;
-  }
+/* Restore native cursor when JS detects no fine pointer at runtime */
+:global(.no-custom-cursor) .root,
+:global(.no-custom-cursor) .root * {
+  cursor: auto !important;
 }
 
 /* ── Custom cursor ── */
@@ -671,6 +674,5 @@
   }
   .marqueeContainer { display: none; }
   .ctaSection { padding: 4rem 1.5rem 3rem; }
-  .root, .root * { cursor: auto !important; }
   .cursorDot, .cursorRing, .cursorThermal { display: none; }
 }

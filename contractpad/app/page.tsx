@@ -28,9 +28,26 @@ export default function LandingPage() {
   const [cursorVisible, setCursorVisible] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const mousePos = useRef({ x: 0, y: 0 });
 
-  // Cursor + particle + orb system
+  // Defer video load until after first paint
+  useEffect(() => {
+    const hasRIC = typeof window.requestIdleCallback === "function";
+    const id = hasRIC
+      ? window.requestIdleCallback(() => setVideoReady(true))
+      : window.setTimeout(() => setVideoReady(true), 1500);
+    return () => {
+      if (hasRIC) window.cancelIdleCallback(id as number);
+      else window.clearTimeout(id as number);
+    };
+  }, []);
+
+  // Check for fine pointer (real mouse) vs touch/trackpad-only
+  const hasFinePointer = typeof window !== "undefined"
+    && window.matchMedia("(pointer: fine)").matches;
+
+  // Unified cursor + particle + orb loop
   useEffect(() => {
     const dot = cursorDotRef.current;
     const ring = cursorRingRef.current;
@@ -39,6 +56,13 @@ export default function LandingPage() {
     const orbCanvas = orbCanvasRef.current;
     if (!dot || !ring || !thermal || !particleCanvas || !orbCanvas) return;
 
+    // Detect fine pointer — only show custom cursor for real mouse devices
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (!finePointer) {
+      // Immediately show native cursor, skip custom cursor entirely
+      document.documentElement.classList.add("no-custom-cursor");
+    }
+
     let dotX = 0, dotY = 0, ringX = 0, ringY = 0;
 
     let firstMove = true;
@@ -46,34 +70,15 @@ export default function LandingPage() {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
       if (firstMove) {
-        // Snap initial cursor positions to where the mouse actually is
-        // so we don't see the lerp slide in from (0, 0).
         dotX = e.clientX;
         dotY = e.clientY;
         ringX = e.clientX;
         ringY = e.clientY;
         firstMove = false;
-        setCursorVisible(true);
+        if (finePointer) setCursorVisible(true);
       }
     };
     window.addEventListener("mousemove", handleMouseMove);
-
-    let rafId = 0;
-    const animateCursor = () => {
-      dotX += (mousePos.current.x - dotX) * 0.25;
-      dotY += (mousePos.current.y - dotY) * 0.25;
-      ringX += (mousePos.current.x - ringX) * 0.12;
-      ringY += (mousePos.current.y - ringY) * 0.12;
-
-      dot.style.left = dotX + "px";
-      dot.style.top = dotY + "px";
-      ring.style.left = ringX + "px";
-      ring.style.top = ringY + "px";
-      thermal.style.left = mousePos.current.x + "px";
-      thermal.style.top = mousePos.current.y + "px";
-      rafId = requestAnimationFrame(animateCursor);
-    };
-    animateCursor();
 
     // ── Particle system ──
     const pCtx = particleCanvas.getContext("2d");
@@ -92,7 +97,7 @@ export default function LandingPage() {
     }
 
     const particles: P[] = [];
-    const PARTICLE_COUNT = 120;
+    const PARTICLE_COUNT = 50;
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       particles.push({
         x: Math.random() * particleCanvas.width,
@@ -105,63 +110,6 @@ export default function LandingPage() {
       });
     }
 
-    const updateParticles = () => {
-      pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-
-      particles.forEach((p) => {
-        const dx = mousePos.current.x - p.x;
-        const dy = mousePos.current.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 200) {
-          const force = (200 - dist) / 200;
-          const angle = Math.atan2(dy, dx);
-          p.speedX += Math.cos(angle + Math.PI * 0.5) * force * 0.04;
-          p.speedY += Math.sin(angle + Math.PI * 0.5) * force * 0.04;
-          p.opacity = Math.min(0.3, p.opacity + force * 0.01);
-        }
-
-        p.speedX *= 0.98;
-        p.speedY *= 0.98;
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.opacity *= 0.999;
-        if (p.opacity < 0.02) p.opacity = 0.02;
-
-        if (p.x < -10) p.x = particleCanvas.width + 10;
-        if (p.x > particleCanvas.width + 10) p.x = -10;
-        if (p.y < -10) p.y = particleCanvas.height + 10;
-        if (p.y > particleCanvas.height + 10) p.y = -10;
-
-        pCtx.beginPath();
-        pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        pCtx.fillStyle = p.hue === 22
-          ? `rgba(232, 114, 58, ${p.opacity})`
-          : `rgba(58, 142, 232, ${p.opacity})`;
-        pCtx.fill();
-      });
-
-      // Connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            const opacity = (1 - dist / 120) * 0.04;
-            pCtx.beginPath();
-            pCtx.moveTo(particles[i].x, particles[i].y);
-            pCtx.lineTo(particles[j].x, particles[j].y);
-            pCtx.strokeStyle = `rgba(232, 114, 58, ${opacity})`;
-            pCtx.lineWidth = 0.5;
-            pCtx.stroke();
-          }
-        }
-      }
-      rafId = requestAnimationFrame(updateParticles);
-    };
-    updateParticles();
-
     // ── Thermal orb ──
     const oCtx = orbCanvas.getContext("2d");
     if (!oCtx) return;
@@ -171,7 +119,7 @@ export default function LandingPage() {
       baseAngle: number; angle: number; baseRadius: number; size: number;
       speed: number; offsetX: number; offsetY: number; warm: boolean;
     }
-    const NUM_MOTES = 28;
+    const NUM_MOTES = 20;
     const motes: Mote[] = [];
     for (let i = 0; i < NUM_MOTES; i++) {
       const angle = (Math.PI * 2 * i) / NUM_MOTES;
@@ -188,17 +136,97 @@ export default function LandingPage() {
     }
 
     let orbPhase = 0, orbGlow = 0.3, orbHeat = 0.5;
+    let rafId = 0;
+    let frameCount = 0;
 
-    const drawOrb = () => {
+    // ── Single unified animation loop ──
+    const tick = () => {
+      frameCount++;
+
+      // ── Cursor (every frame, only for fine pointer) ──
+      if (finePointer) {
+        dotX += (mousePos.current.x - dotX) * 0.25;
+        dotY += (mousePos.current.y - dotY) * 0.25;
+        ringX += (mousePos.current.x - ringX) * 0.12;
+        ringY += (mousePos.current.y - ringY) * 0.12;
+
+        dot.style.left = dotX + "px";
+        dot.style.top = dotY + "px";
+        ring.style.left = ringX + "px";
+        ring.style.top = ringY + "px";
+        thermal.style.left = mousePos.current.x + "px";
+        thermal.style.top = mousePos.current.y + "px";
+      }
+
+      // ── Particles (every other frame) ──
+      if (frameCount % 2 === 0) {
+        pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+        particles.forEach((p) => {
+          const dx = mousePos.current.x - p.x;
+          const dy = mousePos.current.y - p.y;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < 40000) { // 200²
+            const dist = Math.sqrt(distSq);
+            const force = (200 - dist) / 200;
+            const angle = Math.atan2(dy, dx);
+            p.speedX += Math.cos(angle + Math.PI * 0.5) * force * 0.04;
+            p.speedY += Math.sin(angle + Math.PI * 0.5) * force * 0.04;
+            p.opacity = Math.min(0.3, p.opacity + force * 0.01);
+          }
+
+          p.speedX *= 0.98;
+          p.speedY *= 0.98;
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.opacity *= 0.999;
+          if (p.opacity < 0.02) p.opacity = 0.02;
+
+          if (p.x < -10) p.x = particleCanvas.width + 10;
+          if (p.x > particleCanvas.width + 10) p.x = -10;
+          if (p.y < -10) p.y = particleCanvas.height + 10;
+          if (p.y > particleCanvas.height + 10) p.y = -10;
+
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          pCtx.fillStyle = p.hue === 22
+            ? `rgba(232, 114, 58, ${p.opacity})`
+            : `rgba(58, 142, 232, ${p.opacity})`;
+          pCtx.fill();
+        });
+
+        // Connections — only check every 4th frame, use distSq to skip sqrt
+        if (frameCount % 4 === 0) {
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const distSq = dx * dx + dy * dy;
+              if (distSq < 14400) { // 120²
+                const opacity = (1 - Math.sqrt(distSq) / 120) * 0.04;
+                pCtx.beginPath();
+                pCtx.moveTo(particles[i].x, particles[i].y);
+                pCtx.lineTo(particles[j].x, particles[j].y);
+                pCtx.strokeStyle = `rgba(232, 114, 58, ${opacity})`;
+                pCtx.lineWidth = 0.5;
+                pCtx.stroke();
+              }
+            }
+          }
+        }
+      }
+
+      // ── Orb (every frame — it's small canvas, cheap) ──
       oCtx.clearRect(0, 0, W, H);
       const rect = orbCanvas.getBoundingClientRect();
       const orbCx = rect.left + rect.width / 2;
       const orbCy = rect.top + rect.height / 2;
-      const dx = mousePos.current.x - orbCx;
-      const dy = mousePos.current.y - orbCy;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const odx = mousePos.current.x - orbCx;
+      const ody = mousePos.current.y - orbCy;
+      const oDist = Math.sqrt(odx * odx + ody * ody);
 
-      const targetHeat = dist < 250 ? 1 - dist / 250 : 0;
+      const targetHeat = oDist < 250 ? 1 - oDist / 250 : 0;
       orbHeat += (targetHeat - orbHeat) * 0.05;
       const targetGlow = 0.2 + orbHeat * 0.5;
       orbGlow += (targetGlow - orbGlow) * 0.08;
@@ -232,12 +260,12 @@ export default function LandingPage() {
       oCtx.arc(cx, cy, 12, 0, Math.PI * 2);
       oCtx.fill();
 
-      const cursorAngle = Math.atan2(dy, dx);
+      const cursorAngle = Math.atan2(ody, odx);
       motes.forEach((m) => {
         m.angle += m.speed + orbHeat * 0.006;
         let repelX = 0, repelY = 0;
-        if (dist < 200) {
-          const force = (200 - dist) / 200;
+        if (oDist < 200) {
+          const force = (200 - oDist) / 200;
           repelX = Math.cos(cursorAngle) * force * 14;
           repelY = Math.sin(cursorAngle) * force * 14;
         }
@@ -267,14 +295,15 @@ export default function LandingPage() {
         oCtx.fill();
       });
 
-      requestAnimationFrame(drawOrb);
+      rafId = requestAnimationFrame(tick);
     };
-    drawOrb();
+    rafId = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", resizeParticleCanvas);
       cancelAnimationFrame(rafId);
+      document.documentElement.classList.remove("no-custom-cursor");
     };
   }, []);
 
@@ -294,8 +323,8 @@ export default function LandingPage() {
       line.addEventListener("animationend", () => line.remove());
     };
 
-    const interval = setInterval(spawn, 1500);
-    for (let i = 0; i < 5; i++) spawn();
+    const interval = setInterval(spawn, 3000);
+    for (let i = 0; i < 3; i++) spawn();
     return () => clearInterval(interval);
   }, []);
 
@@ -328,14 +357,16 @@ export default function LandingPage() {
         className={`${styles.cursorThermal} ${cursorVisible ? styles.cursorActive : ""}`}
       />
 
-      {/* Background video */}
+      {/* Background video — deferred until after first paint */}
       <div className={styles.videoBg}>
-        <video autoPlay muted loop playsInline preload="none">
-          <source
-            src="https://videos.pexels.com/video-files/5327935/5327935-sd_640_360_30fps.mp4"
-            type="video/mp4"
-          />
-        </video>
+        {videoReady && (
+          <video autoPlay muted loop playsInline preload="metadata">
+            <source
+              src="https://videos.pexels.com/video-files/5327935/5327935-sd_640_360_30fps.mp4"
+              type="video/mp4"
+            />
+          </video>
+        )}
       </div>
 
       {/* Background layers — grid + noise come from globals body::before/after */}
@@ -402,7 +433,7 @@ export default function LandingPage() {
           ))}
           <div className={styles.mobileOverlayDivider} />
           <a
-            href="mailto:ctananbaum@mba2027.hbs.edu"
+            href="mailto:charles@fieldpass.pro"
             className={styles.mobileOverlayLink}
             onClick={() => setMenuOpen(false)}
           >
@@ -438,7 +469,7 @@ export default function LandingPage() {
 
         <div className={styles.ctaContainer}>
           <a
-            href="mailto:ctananbaum@mba2027.hbs.edu"
+            href="mailto:charles@fieldpass.pro"
             className={styles.ctaBtn}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
@@ -480,7 +511,7 @@ export default function LandingPage() {
           starts when the clipboard becomes a dashboard. Let's get you there.
         </p>
         <a
-          href="mailto:ctananbaum@mba2027.hbs.edu"
+          href="mailto:charles@fieldpass.pro"
           className={styles.ctaBtn}
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
