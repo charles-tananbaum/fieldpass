@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" width="600" height="160">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" width="640" height="180">
   <defs>
     <linearGradient id="thermal" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#e8723a"/>
@@ -6,22 +6,33 @@
       <stop offset="65%" stop-color="#8a3ae8"/>
       <stop offset="100%" stop-color="#3a8ee8"/>
     </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f1218"/>
+      <stop offset="100%" stop-color="#0a0c10"/>
+    </linearGradient>
   </defs>
 
-  <!-- Wordmark: full thermal gradient — readable on light AND dark backgrounds -->
-  <text x="0" y="92"
+  <!-- Brand-dark badge background with rounded corners -->
+  <rect x="0" y="0" width="640" height="180" rx="14" ry="14" fill="url(#bgGrad)"/>
+
+  <!-- Subtle inner border for depth -->
+  <rect x="0.5" y="0.5" width="639" height="179" rx="13.5" ry="13.5"
+        fill="none" stroke="#1a1f2a" stroke-width="1"/>
+
+  <!-- Wordmark with thermal gradient -->
+  <text x="32" y="102"
         font-family="'Instrument Serif', 'Times New Roman', Georgia, serif"
         font-size="84"
         font-weight="400"
         fill="url(#thermal)">FieldPass</text>
 
-  <!-- Thermal bar -->
-  <rect x="2" y="108" width="280" height="3" rx="1.5" fill="url(#thermal)"/>
+  <!-- Thermal accent bar -->
+  <rect x="34" y="118" width="280" height="3" rx="1.5" fill="url(#thermal)"/>
 
-  <!-- Tagline: brand orange — high contrast on both white and dark bgs -->
-  <text x="2" y="138"
+  <!-- Tagline -->
+  <text x="34" y="148"
         font-family="'DM Mono', 'Courier New', monospace"
         font-size="14"
         letter-spacing="2"
-        fill="#e8723a">SOFTWARE FOR HVAC OPERATORS</text>
+        fill="#8a93a0">SOFTWARE FOR HVAC OPERATORS</text>
 </svg>
