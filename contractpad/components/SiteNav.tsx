@@ -8,6 +8,7 @@ import styles from "./SiteNav.module.css";
 const NAV_LINKS = [
   { href: "/who-we-are", label: "Who We Are" },
   { href: "/what-we-do", label: "What We Do" },
+  { href: "/servicetitan", label: "ServiceTitan" },
   { href: "/why-we-do-it", label: "Why We Do It" },
   { href: "/demos", label: "Demos" },
 ];

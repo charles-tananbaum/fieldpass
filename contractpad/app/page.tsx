@@ -378,6 +378,7 @@ export default function LandingPage() {
           {[
             { href: "/who-we-are", label: "Who We Are" },
             { href: "/what-we-do", label: "What We Do" },
+            { href: "/servicetitan", label: "ServiceTitan" },
             { href: "/why-we-do-it", label: "Why" },
             { href: "/demos", label: "Demos" },
           ].map((link) => (
@@ -415,6 +416,7 @@ export default function LandingPage() {
           {[
             { href: "/who-we-are", label: "Who We Are" },
             { href: "/what-we-do", label: "What We Do" },
+            { href: "/servicetitan", label: "ServiceTitan" },
             { href: "/why-we-do-it", label: "Why We Do It" },
             { href: "/demos", label: "Demos" },
           ].map((link) => (
