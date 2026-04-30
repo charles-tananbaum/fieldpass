@@ -23,8 +23,8 @@ const STEPS = [
   {
     number: "01",
     title: "Readiness Audit",
-    desc: "Two-week deep dive into your current platform, data, and workflows. We map exactly what moves cleanly, what needs cleanup, and what gets rebuilt — before a single dollar is spent on migration.",
-    deliverable: "Migration plan + risk register + fixed-fee proposal",
+    desc: "A free, two-week deep dive into your current platform, data, and workflows. We map exactly what moves cleanly, what needs cleanup, and what gets rebuilt — before a single dollar is spent on migration.",
+    deliverable: "Migration plan + risk register + fixed-fee proposal · free",
   },
   {
     number: "02",
@@ -46,61 +46,22 @@ const STEPS = [
   },
 ];
 
-const TIERS = [
-  {
-    name: "Readiness Audit",
-    price: "$7,500",
-    cadence: "two-week engagement",
-    accentClass: styles.tierWarm,
-    description: "Before you sign with ServiceTitan — or if you're stuck mid-implementation — we audit your data, workflows, and team readiness.",
-    features: [
-      "Full platform & data audit",
-      "Migration risk register",
-      "Tech adoption gap analysis",
-      "Fixed-fee migration proposal",
-      "Credited toward migration if you proceed",
-    ],
-    cta: "Book the audit",
-    highlight: false,
-  },
-  {
-    name: "Standard Migration",
-    price: "$65,000",
-    cadence: "90-day fixed-fee",
-    accentClass: styles.tierCool,
-    description: "Single-location operators migrating from QuickBooks, Housecall Pro, or another field service platform.",
-    features: [
-      "Up to 10,000 customer records",
-      "Pricebook + agreements migration",
-      "Dispatch & payroll configuration",
-      "Two weeks on-site training",
-      "90 days of post-launch support",
-    ],
-    cta: "Talk to us",
-    highlight: true,
-  },
-  {
-    name: "Enterprise Migration",
-    price: "$125,000+",
-    cadence: "4–6 month engagement",
-    accentClass: styles.tierPurple,
-    description: "Multi-location operators with custom integrations, financing partners, and complex reporting requirements.",
-    features: [
-      "Multi-location rollout",
-      "Custom integrations (Wisetack, GoodLeap, parts)",
-      "Advanced reporting & dashboards",
-      "Tiered training (techs, CSRs, leadership)",
-      "Dedicated project manager",
-    ],
-    cta: "Scope the project",
-    highlight: false,
-  },
+const AUDIT_INCLUDES = [
+  "Full review of your current platform, data, and workflows",
+  "Mapping of what migrates cleanly vs. what needs cleanup",
+  "Tech adoption & training gap analysis",
+  "Fixed-fee migration proposal scoped to your business",
+  "Risk register with mitigation plan for each issue we find",
 ];
 
 const FAQS = [
   {
-    q: "Are you a certified ServiceTitan partner?",
-    a: "We're an active ServiceTitan Implementation Partner. That means we work directly with ST's partner team and account executives — not just consultants who've poked around the platform.",
+    q: "Why is the audit free?",
+    a: "Because most operators have no idea what they're walking into until someone shows them. The audit gives you a real plan — even if you don't hire us. We've found that operators who go through it almost always come back, and the ones who don't weren't a fit anyway.",
+  },
+  {
+    q: "What does a migration cost after the audit?",
+    a: "It depends entirely on what we find. A clean single-location move from Housecall Pro is very different from a multi-location rescue with custom integrations. The audit produces a fixed-fee proposal scoped to your specific business — no surprises, no hourly billing.",
   },
   {
     q: "How is this different from ServiceTitan Pro Services?",
@@ -108,11 +69,7 @@ const FAQS = [
   },
   {
     q: "What if we're already mid-implementation and stuck?",
-    a: "We do rescue engagements. Start with the Readiness Audit so we can scope what's salvageable and what needs to be redone. Most stuck implementations can be back on track in 30 days.",
-  },
-  {
-    q: "Do you handle the QuickBooks side too?",
-    a: "Yes. Most operators we work with are coming off QuickBooks Desktop or Online. We handle the GL mapping, AR migration, and ongoing financial close workflow.",
+    a: "We do rescue engagements. Start with the audit so we can scope what's salvageable and what needs to be redone. Most stuck implementations can be back on track in 30 days.",
   },
 ];
 
@@ -128,10 +85,7 @@ export default function ServiceTitanPage() {
   const step3 = useScrollReveal();
   const stepRefs = [step0, step1, step2, step3];
 
-  const tier0 = useScrollReveal();
-  const tier1 = useScrollReveal();
-  const tier2 = useScrollReveal();
-  const tierRefs = [tier0, tier1, tier2];
+  const auditCard = useScrollReveal();
 
   const faq0 = useScrollReveal();
   const faq1 = useScrollReveal();
@@ -155,9 +109,9 @@ export default function ServiceTitanPage() {
           intact and the team trained.
         </p>
         <div className={styles.heroCtas}>
-          <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Readiness%20Audit"
+          <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Free%20Audit"
              className={styles.ctaPrimary}>
-            Book a Readiness Audit <span className={styles.arrow}>→</span>
+            Book a free audit <span className={styles.arrow}>→</span>
           </a>
           <a href="#how" className={styles.ctaSecondary}>
             See how it works
@@ -227,43 +181,55 @@ export default function ServiceTitanPage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className={styles.pricingSection}>
+      {/* Free audit — the only entry point */}
+      <section className={styles.auditSection}>
         <h2 className={styles.sectionTitle}>
-          Three tiers. <em>Fixed fee.</em>
+          Start with a <em>free audit.</em>
         </h2>
         <p className={styles.sectionLede}>
-          We don't bill hours. You know what you're paying before we start.
+          Every engagement begins here. Two weeks. No cost. No commitment.
+          You walk away with a clear migration plan whether you work with us
+          or not.
         </p>
-        <div className={styles.tierGrid}>
-          {TIERS.map((t, i) => (
-            <div
-              key={t.name}
-              ref={tierRefs[i].ref}
-              className={`${styles.tier} ${t.accentClass} ${
-                t.highlight ? styles.tierHighlight : ""
-              } ${tierRefs[i].isVisible ? styles.visible : ""}`}
-              style={staggerDelay(i)}
+
+        <div
+          ref={auditCard.ref}
+          className={`${styles.auditCard} ${auditCard.isVisible ? styles.visible : ""}`}
+        >
+          <div className={styles.auditBadge}>Free · Two weeks</div>
+          <h3 className={styles.auditTitle}>The Readiness Audit</h3>
+          <p className={styles.auditDesc}>
+            Before you sign with ServiceTitan — or if you're already stuck
+            mid-implementation — we go deep on your data, your workflows,
+            and your team's readiness for the change.
+          </p>
+
+          <div className={styles.auditIncludes}>
+            <div className={styles.auditIncludesLabel}>What you get</div>
+            <ul className={styles.auditList}>
+              {AUDIT_INCLUDES.map((item) => (
+                <li key={item}>
+                  <span className={styles.checkmark}>✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.auditFooter}>
+            <p className={styles.auditFooterText}>
+              <strong>What happens next:</strong> if the audit reveals a clean
+              path forward, we&apos;ll scope a fixed-fee migration proposal
+              tailored to your business. If it doesn&apos;t, you&apos;ll know that
+              too — with the data to back it up.
+            </p>
+            <a
+              href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Free%20Audit"
+              className={styles.auditCta}
             >
-              {t.highlight && <div className={styles.tierBadge}>Most operators start here</div>}
-              <div className={styles.tierName}>{t.name}</div>
-              <div className={styles.tierPrice}>{t.price}</div>
-              <div className={styles.tierCadence}>{t.cadence}</div>
-              <p className={styles.tierDesc}>{t.description}</p>
-              <ul className={styles.tierFeatures}>
-                {t.features.map((f) => (
-                  <li key={f}>
-                    <span className={styles.checkmark}>✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Inquiry"
-                 className={styles.tierCta}>
-                {t.cta} <span className={styles.arrow}>→</span>
-              </a>
-            </div>
-          ))}
+              Book the free audit <span className={styles.arrow}>→</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -293,12 +259,12 @@ export default function ServiceTitanPage() {
           Ready to do this <em>right?</em>
         </h2>
         <p className={styles.finalCtaText}>
-          Two weeks. $7,500. A migration plan written by people who have done
+          Two weeks. Free. A migration plan written by people who have done
           this before — not a sales deck.
         </p>
-        <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Readiness%20Audit"
+        <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Free%20Audit"
            className={styles.ctaPrimary}>
-          Book a Readiness Audit <span className={styles.arrow}>→</span>
+          Book the free audit <span className={styles.arrow}>→</span>
         </a>
       </section>
     </PageLayout>
