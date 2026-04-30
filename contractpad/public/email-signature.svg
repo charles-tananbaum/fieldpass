@@ -13,20 +13,28 @@
     </linearGradient>
   </defs>
 
-  <!-- Wordmark -->
+  <!-- Wordmark: "Field" is white with black outline (works on light + dark bg);
+       "Pass" uses thermal gradient with thin dark outline for contrast on light bg. -->
   <text x="0" y="92"
         font-family="'Instrument Serif', 'Times New Roman', Georgia, serif"
         font-size="84"
         font-weight="400"
-        fill="#0a0c10">Field<tspan fill="url(#passGrad)">Pass</tspan></text>
+        style="paint-order: stroke fill;"
+        stroke="#0a0c10"
+        stroke-width="2.5"
+        stroke-linejoin="round"
+        fill="#ffffff">Field<tspan fill="url(#passGrad)" stroke="none">Pass</tspan></text>
 
   <!-- Thermal bar -->
   <rect x="2" y="108" width="280" height="3" rx="1.5" fill="url(#thermal)"/>
 
-  <!-- Tagline -->
+  <!-- Tagline: white fill + thin dark outline so it reads on both backgrounds -->
   <text x="2" y="138"
         font-family="'DM Mono', 'Courier New', monospace"
         font-size="14"
         letter-spacing="2"
-        fill="#5a6573">SOFTWARE FOR HVAC OPERATORS</text>
+        style="paint-order: stroke fill;"
+        stroke="#0a0c10"
+        stroke-width="0.8"
+        fill="#ffffff">SOFTWARE FOR HVAC OPERATORS</text>
 </svg>
