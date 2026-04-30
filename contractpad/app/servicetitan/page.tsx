@@ -23,26 +23,26 @@ const STEPS = [
   {
     number: "01",
     title: "Readiness Audit",
-    desc: "A free, two-week deep dive into your current platform, data, and workflows. We map exactly what moves cleanly, what needs cleanup, and what gets rebuilt — before a single dollar is spent on migration.",
-    deliverable: "Migration plan + risk register + fixed-fee proposal · free",
+    desc: "A free, 5-day deep dive into your current platform, data, and workflows. We map exactly what moves cleanly, what needs cleanup, and what gets rebuilt — before a single dollar is spent on migration.",
+    deliverable: "Migration plan + risk register + fixed-fee proposal · free, 5 days",
   },
   {
     number: "02",
     title: "Data Migration",
-    desc: "Customer history, equipment records, agreements, pricebook items, and accounts receivable migrated cleanly. We test against your live data, not a sandbox demo. No surprises on cutover day.",
-    deliverable: "Validated data in ServiceTitan, signed off field-by-field",
+    desc: "Customer history, equipment records, agreements, pricebook items, and accounts receivable migrated cleanly in 2–3 weeks. We test against your live data, not a sandbox demo. No surprises on cutover day.",
+    deliverable: "Validated data in ServiceTitan, signed off field-by-field · 2–3 weeks",
   },
   {
     number: "03",
     title: "Configuration & Training",
-    desc: "Dispatch boards, payroll, agreements, financing, and reporting configured for how your business actually runs — not the textbook setup. Two weeks of on-site tech and CSR training before you go live.",
-    deliverable: "Production-ready ST instance + trained team",
+    desc: "Dispatch boards, payroll, agreements, financing, and reporting configured for how your business actually runs — not the textbook setup. One week of on-site tech and CSR training before you go live.",
+    deliverable: "Production-ready ST instance + trained team · 1 week",
   },
   {
     number: "04",
-    title: "Go-Live + 90 Days of Support",
-    desc: "We're on-site the week of cutover and on-call for 90 days after. Weekly office hours, real-time issue triage, and reporting tune-ups so you're not flying blind in your first quarter.",
-    deliverable: "Smooth cutover + first-quarter operating discipline",
+    title: "Go-Live + 30 Days of Support",
+    desc: "We're on-site cutover week and on-call for 30 days after. Daily check-ins for the first week, twice-weekly office hours, real-time issue triage, and reporting tune-ups so you're not flying blind in your first month.",
+    deliverable: "Smooth cutover + first-month operating discipline · 30 days",
   },
 ];
 
@@ -61,7 +61,7 @@ const FAQS = [
   },
   {
     q: "What does a migration cost after the audit?",
-    a: "It depends entirely on what we find. A clean single-location move from Housecall Pro is very different from a multi-location rescue with custom integrations. The audit produces a fixed-fee proposal scoped to your specific business — no surprises, no hourly billing.",
+    a: "It depends entirely on what we find. A clean single-location move from Housecall Pro is very different from a multi-location rescue with custom integrations. Most migrations run 4–6 weeks end-to-end, and the audit produces a fixed-fee proposal scoped to your specific business — no surprises, no hourly billing.",
   },
   {
     q: "How is this different from ServiceTitan Pro Services?",
@@ -69,7 +69,7 @@ const FAQS = [
   },
   {
     q: "What if we're already mid-implementation and stuck?",
-    a: "We do rescue engagements. Start with the audit so we can scope what's salvageable and what needs to be redone. Most stuck implementations can be back on track in 30 days.",
+    a: "We do rescue engagements. Start with the audit so we can scope what's salvageable and what needs to be redone. Most stuck implementations can be back on track in 2–3 weeks.",
   },
 ];
 
@@ -104,9 +104,8 @@ export default function ServiceTitanPage() {
         </h1>
         <div className="thermal-divider mx-auto mb-6" />
         <p className={styles.heroSub}>
-          Most ServiceTitan implementations run late, lose data, and get
-          abandoned by techs. We do them fixed-fee, on-time, with the data
-          intact and the team trained.
+          The industry standard is 3–6 months. We do it in 4–6 weeks —
+          fixed-fee, on-time, with the data intact and the team trained.
         </p>
         <div className={styles.heroCtas}>
           <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Free%20Audit"
@@ -187,16 +186,16 @@ export default function ServiceTitanPage() {
           Start with a <em>free audit.</em>
         </h2>
         <p className={styles.sectionLede}>
-          Every engagement begins here. Two weeks. No cost. No commitment.
-          You walk away with a clear migration plan whether you work with us
-          or not.
+          Every engagement begins here. Five business days. No cost. No
+          commitment. You walk away with a clear migration plan whether you
+          work with us or not.
         </p>
 
         <div
           ref={auditCard.ref}
           className={`${styles.auditCard} ${auditCard.isVisible ? styles.visible : ""}`}
         >
-          <div className={styles.auditBadge}>Free · Two weeks</div>
+          <div className={styles.auditBadge}>Free · 5 business days</div>
           <h3 className={styles.auditTitle}>The Readiness Audit</h3>
           <p className={styles.auditDesc}>
             Before you sign with ServiceTitan — or if you're already stuck
@@ -259,8 +258,8 @@ export default function ServiceTitanPage() {
           Ready to do this <em>right?</em>
         </h2>
         <p className={styles.finalCtaText}>
-          Two weeks. Free. A migration plan written by people who have done
-          this before — not a sales deck.
+          Five business days. Free. A migration plan written by people who
+          have done this before — not a sales deck.
         </p>
         <a href="mailto:charles@fieldpass.pro?subject=ServiceTitan%20Free%20Audit"
            className={styles.ctaPrimary}>
