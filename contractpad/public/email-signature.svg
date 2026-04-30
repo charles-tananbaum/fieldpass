@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" width="600" height="160">
+  <defs>
+    <linearGradient id="thermal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e8723a"/>
+      <stop offset="35%" stop-color="#d4553a"/>
+      <stop offset="65%" stop-color="#8a3ae8"/>
+      <stop offset="100%" stop-color="#3a8ee8"/>
+    </linearGradient>
+    <linearGradient id="passGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e8723a"/>
+      <stop offset="50%" stop-color="#c84a8e"/>
+      <stop offset="100%" stop-color="#8a3ae8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Wordmark -->
+  <text x="0" y="92"
+        font-family="'Instrument Serif', 'Times New Roman', Georgia, serif"
+        font-size="84"
+        font-weight="400"
+        fill="#0a0c10">Field<tspan fill="url(#passGrad)">Pass</tspan></text>
+
+  <!-- Thermal bar -->
+  <rect x="2" y="108" width="280" height="3" rx="1.5" fill="url(#thermal)"/>
+
+  <!-- Tagline -->
+  <text x="2" y="138"
+        font-family="'DM Mono', 'Courier New', monospace"
+        font-size="14"
+        letter-spacing="2"
+        fill="#5a6573">SOFTWARE FOR HVAC OPERATORS</text>
+</svg>
