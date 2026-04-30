@@ -1,146 +1,102 @@
 "use client";
 
-import PageLayout from "@/components/PageLayout";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
-import styles from "./what-we-do.module.css";
+import Link from "next/link";
+import OperatorLayout from "@/components/OperatorLayout";
+import styles from "./what.module.css";
 
-interface ServiceSection {
-  number: string;
-  title: React.ReactNode;
-  desc: string;
-  image: string;
-  imageAlt: string;
-  badgeLabel: string;
-  badgeClass: string;
-  accentClass: string;
-  pills: string[];
-  reversed?: boolean;
-}
-
-const SECTIONS: ServiceSection[] = [
+const SERVICES = [
   {
-    number: "01",
-    title: <>Custom <em>Automations</em></>,
-    desc: "We build custom automations for HVAC operators — invoice generation, booking workflows, pricebook matching, dispatch optimization, and recurring payment management. If your team is doing it manually and repeatedly, we can make it happen automatically.",
-    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-    imageAlt: "Automation workflow on screen",
-    badgeLabel: "Automations",
-    badgeClass: styles.badgeWarm,
-    accentClass: styles.accentWarm,
-    pills: ["Invoice Automation", "Booking Platforms", "Pricebook Matching", "Dispatch Optimization", "Payment Workflows"],
+    n: "1",
+    title: "Custom Automations",
+    desc: "If your team is doing the same thing over and over by hand, we can usually automate it. Invoice generation, dispatching workflows, pricebook lookups, recurring payments, parts ordering — we've built it all before.",
+    bullets: ["Invoice automation", "Dispatch workflows", "Recurring payments", "Pricebook matching"],
   },
   {
-    number: "02",
-    title: <>Operational <em>Auditing</em></>,
-    desc: "Whether you're on QuickBooks, Housecall Pro, ServiceTitan, or still using pen and paper — we audit your workflows end to end. We find what's costing you time, what's falling through the cracks, and where automation or better tooling can make the biggest difference.",
-    image: "https://images.pexels.com/photos/7681091/pexels-photo-7681091.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-    imageAlt: "Data analysis on laptop",
-    badgeLabel: "Auditing",
-    badgeClass: styles.badgeCool,
-    accentClass: styles.accentCool,
-    pills: ["QuickBooks", "Housecall Pro", "ServiceTitan", "Process Analysis", "ROI Mapping"],
-    reversed: true,
+    n: "2",
+    title: "ServiceTitan Migrations",
+    desc: "We move HVAC and plumbing shops from QuickBooks, Housecall Pro, or ServiceFusion onto ServiceTitan in 4–6 weeks. Fixed fee. Data intact. Team trained on-site.",
+    bullets: ["5-day free audit first", "Fixed-fee migration quote", "On-site training", "30 days of post-launch support"],
+    cta: { label: "See migration details →", href: "/servicetitan" },
+    featured: true,
   },
   {
-    number: "03",
-    title: <>Platform <em>Implementation</em></>,
-    desc: "Migrating from legacy systems is painful — data loss, retraining, months of downtime. We handle the migration so you don't have to. Your data moves cleanly, your techs learn the new system in days not months, and your business doesn't skip a beat.",
-    image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-    imageAlt: "Team collaboration on software implementation",
-    badgeLabel: "Implementation",
-    badgeClass: styles.badgePurple,
-    accentClass: styles.accentPurple,
-    pills: ["Data Migration", "Zero Downtime", "Tech Training", "Legacy → Modern", "Pricebook Setup"],
+    n: "3",
+    title: "Operations Audits",
+    desc: "Whether you're on QuickBooks, Housecall Pro, ServiceTitan — or pen and paper — we audit your workflows end to end. We tell you what's costing you time and where the biggest wins are hiding.",
+    bullets: ["End-to-end workflow review", "ROI mapping", "Software fit analysis", "Written action plan"],
   },
   {
-    number: "04",
-    title: <>Education & <em>Training</em></>,
-    desc: "Most operators only use 20% of their software's capabilities. We teach you the features that actually matter for your business — dispatching shortcuts, reporting tricks, agreement management — so your team gets more done with tools they already have.",
-    image: "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-    imageAlt: "Team training session",
-    badgeLabel: "Education",
-    badgeClass: styles.badgeGreen,
-    accentClass: styles.accentGreen,
-    pills: ["Platform Mastery", "Technician Onboarding", "Reporting Setup", "Workflow Templates"],
-    reversed: true,
+    n: "4",
+    title: "Software Training",
+    desc: "Most operators only use 20% of what their software can do. We come in for a few days and teach your CSRs and techs the parts that actually matter — dispatching shortcuts, agreement management, reporting setup.",
+    bullets: ["On-site or remote", "CSR + tech tracks", "Reporting & dashboards", "Workflow templates"],
   },
   {
-    number: "05",
-    title: <>Site <em>Redesign</em></>,
-    desc: "Your website is your storefront. We rebuild it with a modern look that converts visitors into booked calls, improves your Google ranking, and makes your business look as professional online as it is in person. Mobile-first, fast-loading, and SEO-optimized.",
-    image: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop",
-    imageAlt: "Modern website design on laptop",
-    badgeLabel: "Web Design",
-    badgeClass: styles.badgeWarm,
-    accentClass: styles.accentMixed,
-    pills: ["Modern Design", "SEO Optimization", "Mobile-First", "Conversion Rate", "Google Ranking"],
+    n: "5",
+    title: "Website Rebuilds",
+    desc: "Your website is your storefront. We rebuild it modern, mobile-first, and SEO-optimized so customers actually find you and book online. Most of our rebuilds pay for themselves in 3 months.",
+    bullets: ["Modern design", "Mobile-first", "SEO optimized", "Online booking"],
   },
 ];
 
-export default function WhatWeDoPage() {
+export default function OperatorWhatWeDoPage() {
   return (
-    <PageLayout>
+    <OperatorLayout>
       <section className={styles.hero}>
+        <div className={styles.eyebrow}>What we do</div>
         <h1 className={styles.heroTitle}>
-          What we <em>do.</em>
+          Five ways we make your shop <span className={styles.accent}>run better.</span>
         </h1>
-        <div className="thermal-divider mx-auto mb-6" />
         <p className={styles.heroSub}>
-          Five ways we help HVAC businesses run better — from automating
-          your back office to rebuilding your website.
+          From automating your back office to rebuilding your website — if it
+          slows your shop down, we can help fix it.
         </p>
       </section>
 
-      {SECTIONS.map((s, i) => (
-        <ServiceBlock key={s.number} section={s} isLast={i === SECTIONS.length - 1} />
-      ))}
-    </PageLayout>
-  );
-}
+      <section className={styles.servicesSection}>
+        <div className={styles.servicesInner}>
+          {SERVICES.map((s) => (
+            <div
+              key={s.n}
+              className={`${styles.serviceRow} ${s.featured ? styles.serviceFeatured : ""}`}
+            >
+              <div className={styles.serviceLeft}>
+                <div className={styles.serviceNum}>{s.n}</div>
+                <h2 className={styles.serviceTitle}>{s.title}</h2>
+                <p className={styles.serviceDesc}>{s.desc}</p>
+                {s.cta && (
+                  <Link href={s.cta.href} className={styles.serviceCta}>
+                    {s.cta.label}
+                  </Link>
+                )}
+              </div>
+              <div className={styles.serviceRight}>
+                <ul className={styles.serviceBullets}>
+                  {s.bullets.map((b) => (
+                    <li key={b}>
+                      <span className={styles.checkmark}>✓</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-function ServiceBlock({
-  section: s,
-  isLast,
-}: {
-  section: ServiceSection;
-  isLast: boolean;
-}) {
-  const reveal = useScrollReveal({ threshold: 0.15 });
-
-  return (
-    <>
-      <div
-        ref={reveal.ref}
-        className={`${styles.section} ${s.reversed ? styles.sectionReversed : ""} ${
-          reveal.isVisible ? styles.visible : ""
-        }`}
-      >
-        <div className={styles.imageWrap}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={s.image} alt={s.imageAlt} loading="lazy" width={800} height={600} />
-          <div className={`${styles.imageBadge} ${s.badgeClass}`}>
-            {s.badgeLabel}
-          </div>
+      <section className={styles.cta}>
+        <div className={styles.ctaInner}>
+          <h2 className={styles.ctaTitle}>Not sure where to start?</h2>
+          <p className={styles.ctaSub}>
+            Call us. The first conversation is free, takes 20 minutes, and you
+            walk away with at least one thing you can fix tomorrow.
+          </p>
+          <a href="tel:+14157130070" className={styles.ctaPrimary}>
+            📞 Call (415) 713-0070
+          </a>
         </div>
-        <div className={`${styles.content} ${styles.accentBorder} ${s.accentClass}`}>
-          <div className={styles.number}>{s.number}</div>
-          <h2 className={styles.title}>{s.title}</h2>
-          <p className={styles.desc}>{s.desc}</p>
-          <div className={styles.pills}>
-            {s.pills.map((p) => (
-              <span key={p} className={styles.pill}>
-                <span className={styles.pillDot} />
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-      {!isLast && (
-        <div className={styles.sectionDivider}>
-          <div className={styles.sectionDividerLine} />
-        </div>
-      )}
-    </>
+      </section>
+    </OperatorLayout>
   );
 }

@@ -1,92 +1,74 @@
 "use client";
 
-import PageLayout from "@/components/PageLayout";
-import { useScrollReveal, staggerDelay } from "@/hooks/useScrollReveal";
-import styles from "./who-we-are.module.css";
+import OperatorLayout from "@/components/OperatorLayout";
+import styles from "./who.module.css";
 
 const FOUNDERS = [
   {
     photo: "/founders/jack.jpeg",
     name: "Jack",
     role: "Co-Founder · Strategy",
-    bio: "Jack spent four years working with HVAC contractors and field service businesses, learning the real challenges operators face with scheduling, dispatching, and back-office software. That hands-on experience is what drives FieldPass today.",
-    hoverClass: styles.cardWarm,
-    dividerClass: styles.cardDividerWarm,
+    bio: "Jack spent four years working with HVAC contractors and field service businesses. He learned from the inside how shops actually run — the dispatching, the back office, the busy days, the bad days.",
   },
   {
     photo: "/founders/kunal.jpeg",
     name: "Kunal",
     role: "Co-Founder · Product",
-    bio: "Kunal spent four years building software products used by millions of people. He's spent his career making complicated technology simple and useful — and that's exactly what he does at FieldPass.",
-    hoverClass: styles.cardCool,
-    dividerClass: styles.cardDividerCool,
+    bio: "Kunal spent four years building software products used by millions of people. He's spent his career making complicated technology simple — and that's exactly what he does at FieldPass.",
   },
   {
     photo: "/founders/charles.jpeg",
     name: "Charles",
     role: "Co-Founder · Operations",
-    bio: "Charles spent years evaluating and working with software companies, figuring out what actually works and what's just hype. He helped grow one of the most popular software platforms in the world, leading partnerships and business development. At FieldPass, he makes sure everything we build actually saves you time and money — no fluff.",
-    hoverClass: styles.cardPurple,
-    dividerClass: styles.cardDividerPurple,
+    bio: "Charles helped grow one of the most popular software platforms in the world. At FieldPass he makes sure everything we deliver actually saves you time and money — no fluff.",
   },
 ];
 
-export default function WhoWeArePage() {
-  const card0 = useScrollReveal();
-  const card1 = useScrollReveal();
-  const card2 = useScrollReveal();
-  const cardRefs = [card0, card1, card2];
-  const banner = useScrollReveal();
-
+export default function OperatorWhoWeArePage() {
   return (
-    <PageLayout>
+    <OperatorLayout>
       <section className={styles.hero}>
+        <div className={styles.eyebrow}>Who we are</div>
         <h1 className={styles.heroTitle}>
-          Who <em>we are.</em>
+          Three guys. <span className={styles.accent}>One mission.</span>
         </h1>
-        <div className="thermal-divider mx-auto mb-6" />
         <p className={styles.heroSub}>
-          Three guys who met in school and decided to fix the way HVAC
-          businesses run their software.
-        </p>
-      </section>
-
-      <div className={styles.founders}>
-        {FOUNDERS.map((f, i) => (
-          <div
-            key={f.name}
-            ref={cardRefs[i].ref}
-            className={`${styles.card} ${f.hoverClass} ${
-              cardRefs[i].isVisible ? styles.visible : ""
-            }`}
-            style={staggerDelay(i)}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={f.photo}
-              alt={f.name}
-              className={styles.avatar}
-              width={240}
-              height={240}
-              loading="lazy"
-            />
-            <div className={styles.name}>{f.name}</div>
-            <div className={styles.role}>{f.role}</div>
-            <p className={styles.bio}>{f.bio}</p>
-            <div className={`${styles.cardDivider} ${f.dividerClass}`} />
-          </div>
-        ))}
-      </div>
-
-      <section className={styles.banner}>
-        <p
-          ref={banner.ref}
-          className={`${styles.bannerText} ${banner.isVisible ? styles.visible : ""}`}
-        >
           We started FieldPass because HVAC operators deserve better tools,
           better service, and a better deal — without the six-figure price tag.
         </p>
       </section>
-    </PageLayout>
+
+      <section className={styles.foundersSection}>
+        <div className={styles.foundersInner}>
+          {FOUNDERS.map((f) => (
+            <div key={f.name} className={styles.founderCard}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={f.photo} alt={f.name} className={styles.avatar} />
+              <h3 className={styles.name}>{f.name}</h3>
+              <div className={styles.role}>{f.role}</div>
+              <p className={styles.bio}>{f.bio}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.statement}>
+        <div className={styles.statementInner}>
+          <h2 className={styles.statementTitle}>
+            We&apos;re builders, not consultants.
+          </h2>
+          <p className={styles.statementText}>
+            We don&apos;t write 100-page reports. We don&apos;t bill in 6-minute
+            increments. We don&apos;t lock you into a five-year retainer. We
+            show up, do the work, and either fix what&apos;s broken or move on.
+          </p>
+          <p className={styles.statementText}>
+            Most of our customers are small to mid-sized HVAC and plumbing shops
+            with 5–50 trucks. We work with them the way we&apos;d want to be
+            worked with — directly, plainly, and with skin in the game.
+          </p>
+        </div>
+      </section>
+    </OperatorLayout>
   );
 }

@@ -70,6 +70,19 @@
     position: relative;
     z-index: 2;
   }
+
+  /* Operator theme override — light bg, no grid/noise overlays */
+  html.operator-theme {
+    background: #faf8f3;
+  }
+  body.operator-theme {
+    background: #faf8f3;
+    color-scheme: light;
+  }
+  body.operator-theme::before,
+  body.operator-theme::after {
+    display: none;
+  }
 }
 
 @layer components {

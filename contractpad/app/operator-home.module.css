@@ -1,0 +1,581 @@
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 5rem;
+  align-items: center;
+}
+
+.heroLeft { max-width: 620px; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d2691e;
+  margin-bottom: 1.25rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(210, 105, 30, 0.08);
+  border-radius: 4px;
+}
+
+.heroTitle {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #1a1f2e;
+  margin: 0 0 1.5rem;
+}
+
+.accent { color: #d2691e; }
+
+.heroSub {
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: #4a5568;
+  margin: 0 0 2rem;
+  max-width: 580px;
+}
+
+.heroCtas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.75rem;
+  background: linear-gradient(135deg, #d2691e 0%, #b8551a 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(210, 105, 30, 0.25);
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(210, 105, 30, 0.35);
+}
+
+.ctaSecondary {
+  color: #1a1f2e;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: underline;
+  text-decoration-color: #d2691e;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.ctaSecondary:hover { color: #d2691e; }
+
+/* Qualitative outcome pills (replaces numerical heroProof) */
+.heroOutcomes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  max-width: 580px;
+}
+
+.outcomePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.05rem;
+  background: #fff;
+  border: 1px solid #e5e0d6;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #1a1f2e;
+  white-space: nowrap;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.outcomePill:hover {
+  border-color: #d2691e;
+  transform: translateY(-1px);
+}
+
+.outcomeCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(210, 105, 30, 0.12);
+  color: #d2691e;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+/* Legacy proof styles (kept for any other page) */
+.heroProof {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  border: 1px solid #e5e0d6;
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.proofItem { display: flex; flex-direction: column; }
+
+.proofItem strong {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #d2691e;
+  letter-spacing: -0.02em;
+}
+
+.proofItem span {
+  font-size: 0.85rem;
+  color: #4a5568;
+  margin-top: 0.15rem;
+}
+
+.proofDivider {
+  width: 1px;
+  height: 36px;
+  background: #e5e0d6;
+}
+
+.heroRight { position: relative; }
+
+.heroImg {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(26, 31, 46, 0.15);
+}
+
+.heroBadge {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  background: #ffffff;
+  padding: 1.1rem 1.4rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(26, 31, 46, 0.18);
+  border: 1px solid #e5e0d6;
+}
+
+.heroBadgeNumber {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #d2691e;
+  line-height: 1;
+}
+
+.heroBadgeLabel {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d2691e;
+  line-height: 1.2;
+}
+
+.heroBadgeSub {
+  font-size: 0.85rem;
+  color: #4a5568;
+  margin-top: 0.4rem;
+  font-weight: 500;
+  line-height: 1.3;
+  max-width: 180px;
+}
+
+/* Trust strip */
+.trustStrip {
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  border-top: 1px solid #e5e0d6;
+  border-bottom: 1px solid #e5e0d6;
+}
+
+.trustText {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.trustLogos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trustLogo {
+  font-family: "Geist Mono", monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #6b7280;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+/* Sections */
+.servicesSection,
+.testimonialSection,
+.aboutSection,
+.finalCta {
+  padding: 5rem 2rem;
+}
+
+.testimonialSection { background: #ffffff; border-top: 1px solid #e5e0d6; border-bottom: 1px solid #e5e0d6; }
+
+.sectionInner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: #1a1f2e;
+  margin: 0 0 1rem;
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin: 0 0 2.5rem;
+  max-width: 640px;
+}
+
+/* Services */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.serviceCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  background: #ffffff;
+  border: 1px solid #e5e0d6;
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.serviceCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(26, 31, 46, 0.08);
+  border-color: #d2691e;
+}
+
+.serviceCard h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: #1a1f2e;
+}
+
+.serviceCard p {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.serviceArrow {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #d2691e;
+}
+
+.serviceCardFeatured {
+  background: linear-gradient(180deg, #fff8f0 0%, #ffffff 100%);
+  border-color: #d2691e;
+}
+
+.servicePill {
+  position: absolute;
+  top: -10px;
+  left: 1.25rem;
+  background: linear-gradient(135deg, #d2691e 0%, #b8551a 100%);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+}
+
+/* Principles (replaces testimonials) */
+.principlesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.principleCard {
+  padding: 2.25rem 1.85rem;
+  background: #faf8f3;
+  border: 1px solid #e5e0d6;
+  border-radius: 14px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.principleCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(26, 31, 46, 0.08);
+  border-color: #d2691e;
+}
+
+.principleIcon {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.principleTitle {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1a1f2e;
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.015em;
+}
+
+.principleBody {
+  font-size: 0.97rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Testimonials (kept for any future use) */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.testimonial {
+  position: relative;
+  padding: 2rem 1.75rem 1.5rem;
+  background: #faf8f3;
+  border: 1px solid #e5e0d6;
+  border-radius: 14px;
+}
+
+.quoteMark {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: #d2691e;
+  opacity: 0.25;
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+}
+
+.testimonial p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #1a1f2e;
+  margin: 0 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.attribution {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e0d6;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c5f7c 0%, #1a1f2e 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.attribName {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1a1f2e;
+}
+
+.attribRole {
+  font-size: 0.85rem;
+  color: #4a5568;
+}
+
+/* About */
+.aboutInner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.aboutText {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #4a5568;
+  margin: 0 0 1rem;
+}
+
+.aboutRight { position: relative; }
+
+.aboutImg {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(26, 31, 46, 0.12);
+}
+
+.aboutCaption {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  background: rgba(26, 31, 46, 0.85);
+  color: #fff;
+  padding: 0.85rem 1.1rem;
+  border-radius: 10px;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+/* Final CTA */
+.finalCta {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2c5f7c 100%);
+  color: #ffffff;
+}
+
+.finalCtaInner {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.finalCtaTitle {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.85rem;
+}
+
+.finalCtaSub {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 2.5rem;
+}
+
+.finalCtaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.finalCtaCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.finalCtaCard:hover {
+  background: rgba(210, 105, 30, 0.12);
+  border-color: rgba(210, 105, 30, 0.5);
+}
+
+.finalCtaIcon { font-size: 2rem; margin-bottom: 0.85rem; }
+
+.finalCtaCardTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.4rem;
+}
+
+.finalCtaCardValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.finalCtaCardSub {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Mobile */
+@media (max-width: 1000px) {
+  .hero, .aboutInner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .servicesGrid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials, .finalCtaGrid, .principlesGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 3rem 1.25rem 3.5rem; }
+  .servicesSection, .testimonialSection, .aboutSection, .finalCta { padding: 3rem 1.25rem; }
+  .servicesGrid { grid-template-columns: 1fr; }
+  .heroProof { flex-wrap: wrap; gap: 1rem; }
+}

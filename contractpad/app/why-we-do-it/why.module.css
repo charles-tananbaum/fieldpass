@@ -1,0 +1,148 @@
+.hero {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 5rem 2rem 3rem;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d2691e;
+  margin-bottom: 1.25rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(210, 105, 30, 0.08);
+  border-radius: 4px;
+}
+
+.heroTitle {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0 0 1.75rem;
+  color: #1a1f2e;
+}
+
+.accent { color: #d2691e; }
+
+.heroLede {
+  font-size: 1.15rem;
+  color: #4a5568;
+  line-height: 1.7;
+  max-width: 720px;
+  margin: 0 auto 1.25rem;
+}
+
+.statsSection {
+  background: #ffffff;
+  padding: 5rem 2rem;
+  border-top: 1px solid #e5e0d6;
+  border-bottom: 1px solid #e5e0d6;
+}
+
+.statsInner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0 0 2.5rem;
+  color: #1a1f2e;
+  text-align: center;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.statCard {
+  padding: 2.25rem 1.75rem;
+  background: #faf8f3;
+  border: 1px solid #e5e0d6;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #d2691e;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1f2e;
+  margin-bottom: 1rem;
+}
+
+.statDesc {
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.beliefSection {
+  padding: 5rem 2rem;
+  background: #faf8f3;
+}
+
+.beliefInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.beliefCol h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+  color: #1a1f2e;
+}
+
+.beliefCol p {
+  font-size: 1.02rem;
+  color: #4a5568;
+  line-height: 1.65;
+  margin: 0 0 1rem;
+}
+
+.closing {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2c5f7c 100%);
+  color: #ffffff;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.closing p {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+  line-height: 1.5;
+  max-width: 760px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 900px) {
+  .statsGrid, .beliefInner { grid-template-columns: 1fr; }
+}

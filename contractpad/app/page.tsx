@@ -1,529 +1,213 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import styles from "./landing.module.css";
+import OperatorLayout from "@/components/OperatorLayout";
+import styles from "./operator-home.module.css";
 
-const MARQUEE_ITEMS = [
-  "Pricebook Automation",
-  "Data Migration",
-  "Technician Adoption",
-  "Service Agreement Reconstruction",
-  "Customer Deduplication",
-  "Equipment Extraction",
-  "Change Management",
-  "Go-Live Support",
+const SERVICES = [
+  {
+    title: "Custom Automations",
+    desc: "Stop doing things by hand. We automate invoices, dispatching, pricebook lookups, and recurring payments.",
+    href: "/what-we-do",
+  },
+  {
+    title: "ServiceTitan Migrations",
+    desc: "We move HVAC shops onto ServiceTitan in 4–6 weeks — fixed fee, on time, with the data intact.",
+    href: "/servicetitan",
+    featured: true,
+  },
+  {
+    title: "Operations Audits",
+    desc: "We look at how your shop runs end to end — and tell you exactly where you're losing time and money.",
+    href: "/what-we-do",
+  },
+  {
+    title: "Software Training",
+    desc: "Most operators only use 20% of their software. We teach your team the parts that actually matter.",
+    href: "/what-we-do",
+  },
 ];
 
-export default function LandingPage() {
-  const particleCanvasRef = useRef<HTMLCanvasElement>(null);
-  const orbCanvasRef = useRef<HTMLCanvasElement>(null);
-  const cursorDotRef = useRef<HTMLDivElement>(null);
-  const cursorRingRef = useRef<HTMLDivElement>(null);
-  const cursorThermalRef = useRef<HTMLDivElement>(null);
-  const airflowContainerRef = useRef<HTMLDivElement>(null);
-  const ctaTextRef = useRef<HTMLParagraphElement>(null);
+const PRINCIPLES = [
+  {
+    icon: "🚫",
+    title: "No hourly billing",
+    body: "Every engagement is fixed-fee. You know what you're paying before we start — no surprise invoices, no scope creep, no consultant clock running while you sleep.",
+  },
+  {
+    icon: "📋",
+    title: "No long contracts",
+    body: "We don't lock you into multi-year retainers or 90-day notice clauses. Hire us for the work, and if it's not a fit, we shake hands and part ways.",
+  },
+  {
+    icon: "🔧",
+    title: "Skin in the game",
+    body: "We do the work ourselves — no offshoring, no junior consultants. The same person who scopes your project is the one in your shop on cutover day.",
+  },
+];
 
-  const [hovering, setHovering] = useState(false);
-  const [cursorVisible, setCursorVisible] = useState(false);
-  const [ctaVisible, setCtaVisible] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const mousePos = useRef({ x: 0, y: 0 });
-
-  // Defer video load until after first paint
-  useEffect(() => {
-    const hasRIC = typeof window.requestIdleCallback === "function";
-    const id = hasRIC
-      ? window.requestIdleCallback(() => setVideoReady(true))
-      : window.setTimeout(() => setVideoReady(true), 1500);
-    return () => {
-      if (hasRIC) window.cancelIdleCallback(id as number);
-      else window.clearTimeout(id as number);
-    };
-  }, []);
-
-  // Unified cursor + particle + orb loop
-  useEffect(() => {
-    const dot = cursorDotRef.current;
-    const ring = cursorRingRef.current;
-    const thermal = cursorThermalRef.current;
-    const particleCanvas = particleCanvasRef.current;
-    const orbCanvas = orbCanvasRef.current;
-    if (!dot || !ring || !thermal || !particleCanvas || !orbCanvas) return;
-
-    // Detect fine pointer — only show custom cursor for real mouse devices
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
-
-    let dotX = 0, dotY = 0, ringX = 0, ringY = 0;
-
-    let firstMove = true;
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current.x = e.clientX;
-      mousePos.current.y = e.clientY;
-      if (firstMove) {
-        dotX = e.clientX;
-        dotY = e.clientY;
-        ringX = e.clientX;
-        ringY = e.clientY;
-        firstMove = false;
-        if (finePointer) {
-          setCursorVisible(true);
-          // Hide native cursor only now that custom cursor is visible
-          document.documentElement.classList.add("cursor-active");
-        }
-      }
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-
-    // ── Particle system ──
-    const pCtx = particleCanvas.getContext("2d");
-    if (!pCtx) return;
-
-    const resizeParticleCanvas = () => {
-      particleCanvas.width = window.innerWidth;
-      particleCanvas.height = window.innerHeight;
-    };
-    resizeParticleCanvas();
-    window.addEventListener("resize", resizeParticleCanvas);
-
-    interface P {
-      x: number; y: number; size: number; speedX: number; speedY: number;
-      opacity: number; hue: number;
-    }
-
-    const particles: P[] = [];
-    const PARTICLE_COUNT = 50;
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push({
-        x: Math.random() * particleCanvas.width,
-        y: Math.random() * particleCanvas.height,
-        size: Math.random() * 1.5 + 0.5,
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.15 + 0.03,
-        hue: Math.random() > 0.5 ? 22 : 210,
-      });
-    }
-
-    // ── Thermal orb ──
-    const oCtx = orbCanvas.getContext("2d");
-    if (!oCtx) return;
-    const W = 200, H = 200, cx = W / 2, cy = H / 2;
-
-    interface Mote {
-      baseAngle: number; angle: number; baseRadius: number; size: number;
-      speed: number; offsetX: number; offsetY: number; warm: boolean;
-    }
-    const NUM_MOTES = 20;
-    const motes: Mote[] = [];
-    for (let i = 0; i < NUM_MOTES; i++) {
-      const angle = (Math.PI * 2 * i) / NUM_MOTES;
-      motes.push({
-        baseAngle: angle,
-        angle,
-        baseRadius: 38 + Math.random() * 8,
-        size: Math.random() * 2 + 1,
-        speed: 0.003 + Math.random() * 0.004,
-        offsetX: 0,
-        offsetY: 0,
-        warm: Math.random() > 0.4,
-      });
-    }
-
-    let orbPhase = 0, orbGlow = 0.3, orbHeat = 0.5;
-    let rafId = 0;
-    let frameCount = 0;
-
-    // ── Single unified animation loop ──
-    const tick = () => {
-      frameCount++;
-
-      // ── Cursor (every frame, only for fine pointer) ──
-      if (finePointer) {
-        dotX += (mousePos.current.x - dotX) * 0.25;
-        dotY += (mousePos.current.y - dotY) * 0.25;
-        ringX += (mousePos.current.x - ringX) * 0.12;
-        ringY += (mousePos.current.y - ringY) * 0.12;
-
-        dot.style.left = dotX + "px";
-        dot.style.top = dotY + "px";
-        ring.style.left = ringX + "px";
-        ring.style.top = ringY + "px";
-        thermal.style.left = mousePos.current.x + "px";
-        thermal.style.top = mousePos.current.y + "px";
-      }
-
-      // ── Particles (every other frame) ──
-      if (frameCount % 2 === 0) {
-        pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-
-        particles.forEach((p) => {
-          const dx = mousePos.current.x - p.x;
-          const dy = mousePos.current.y - p.y;
-          const distSq = dx * dx + dy * dy;
-
-          if (distSq < 40000) { // 200²
-            const dist = Math.sqrt(distSq);
-            const force = (200 - dist) / 200;
-            const angle = Math.atan2(dy, dx);
-            p.speedX += Math.cos(angle + Math.PI * 0.5) * force * 0.04;
-            p.speedY += Math.sin(angle + Math.PI * 0.5) * force * 0.04;
-            p.opacity = Math.min(0.3, p.opacity + force * 0.01);
-          }
-
-          p.speedX *= 0.98;
-          p.speedY *= 0.98;
-          p.x += p.speedX;
-          p.y += p.speedY;
-          p.opacity *= 0.999;
-          if (p.opacity < 0.02) p.opacity = 0.02;
-
-          if (p.x < -10) p.x = particleCanvas.width + 10;
-          if (p.x > particleCanvas.width + 10) p.x = -10;
-          if (p.y < -10) p.y = particleCanvas.height + 10;
-          if (p.y > particleCanvas.height + 10) p.y = -10;
-
-          pCtx.beginPath();
-          pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          pCtx.fillStyle = p.hue === 22
-            ? `rgba(232, 114, 58, ${p.opacity})`
-            : `rgba(58, 142, 232, ${p.opacity})`;
-          pCtx.fill();
-        });
-
-        // Connections — only check every 4th frame, use distSq to skip sqrt
-        if (frameCount % 4 === 0) {
-          for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-              const dx = particles[i].x - particles[j].x;
-              const dy = particles[i].y - particles[j].y;
-              const distSq = dx * dx + dy * dy;
-              if (distSq < 14400) { // 120²
-                const opacity = (1 - Math.sqrt(distSq) / 120) * 0.04;
-                pCtx.beginPath();
-                pCtx.moveTo(particles[i].x, particles[i].y);
-                pCtx.lineTo(particles[j].x, particles[j].y);
-                pCtx.strokeStyle = `rgba(232, 114, 58, ${opacity})`;
-                pCtx.lineWidth = 0.5;
-                pCtx.stroke();
-              }
-            }
-          }
-        }
-      }
-
-      // ── Orb (every frame — it's small canvas, cheap) ──
-      oCtx.clearRect(0, 0, W, H);
-      const rect = orbCanvas.getBoundingClientRect();
-      const orbCx = rect.left + rect.width / 2;
-      const orbCy = rect.top + rect.height / 2;
-      const odx = mousePos.current.x - orbCx;
-      const ody = mousePos.current.y - orbCy;
-      const oDist = Math.sqrt(odx * odx + ody * ody);
-
-      const targetHeat = oDist < 250 ? 1 - oDist / 250 : 0;
-      orbHeat += (targetHeat - orbHeat) * 0.05;
-      const targetGlow = 0.2 + orbHeat * 0.5;
-      orbGlow += (targetGlow - orbGlow) * 0.08;
-      orbPhase += 0.015;
-
-      const glowR = 34 + Math.sin(orbPhase) * 4;
-      const outerGlow = oCtx.createRadialGradient(cx, cy, glowR * 0.3, cx, cy, glowR * 2.5);
-      outerGlow.addColorStop(0, `rgba(232, 114, 58, ${orbGlow * 0.25})`);
-      outerGlow.addColorStop(0.5, `rgba(58, 142, 232, ${(1 - orbHeat) * 0.15})`);
-      outerGlow.addColorStop(1, "transparent");
-      oCtx.fillStyle = outerGlow;
-      oCtx.fillRect(0, 0, W, H);
-
-      const coreGrad = oCtx.createRadialGradient(cx - 4, cy - 4, 2, cx, cy, 28 + Math.sin(orbPhase * 1.3) * 3);
-      const r1 = Math.round(58 + orbHeat * 174);
-      const g1 = Math.round(142 - orbHeat * 28);
-      const b1 = Math.round(232 - orbHeat * 174);
-      coreGrad.addColorStop(0, `rgba(${r1}, ${g1}, ${b1}, ${0.6 + orbGlow * 0.4})`);
-      coreGrad.addColorStop(0.6, `rgba(${r1}, ${g1}, ${b1}, 0.15)`);
-      coreGrad.addColorStop(1, "transparent");
-      oCtx.fillStyle = coreGrad;
-      oCtx.beginPath();
-      oCtx.arc(cx, cy, 32, 0, Math.PI * 2);
-      oCtx.fill();
-
-      const innerGrad = oCtx.createRadialGradient(cx, cy, 0, cx, cy, 12);
-      innerGrad.addColorStop(0, `rgba(255, 255, 255, ${0.15 + orbHeat * 0.3})`);
-      innerGrad.addColorStop(1, "transparent");
-      oCtx.fillStyle = innerGrad;
-      oCtx.beginPath();
-      oCtx.arc(cx, cy, 12, 0, Math.PI * 2);
-      oCtx.fill();
-
-      const cursorAngle = Math.atan2(ody, odx);
-      motes.forEach((m) => {
-        m.angle += m.speed + orbHeat * 0.006;
-        let repelX = 0, repelY = 0;
-        if (oDist < 200) {
-          const force = (200 - oDist) / 200;
-          repelX = Math.cos(cursorAngle) * force * 14;
-          repelY = Math.sin(cursorAngle) * force * 14;
-        }
-        m.offsetX += (repelX - m.offsetX) * 0.06;
-        m.offsetY += (repelY - m.offsetY) * 0.06;
-
-        const wobble = Math.sin(orbPhase * 2 + m.baseAngle * 3) * 3;
-        const r = m.baseRadius + wobble + orbHeat * 6;
-        const mx = cx + Math.cos(m.angle) * r + m.offsetX;
-        const my = cy + Math.sin(m.angle) * r + m.offsetY;
-
-        const alpha = 0.3 + orbHeat * 0.5;
-        oCtx.fillStyle = m.warm
-          ? `rgba(232, 114, 58, ${alpha})`
-          : `rgba(58, 142, 232, ${alpha * 0.7})`;
-        oCtx.beginPath();
-        oCtx.arc(mx, my, m.size + orbHeat * 0.8, 0, Math.PI * 2);
-        oCtx.fill();
-
-        const tx = cx + Math.cos(m.angle - m.speed * 8) * r + m.offsetX;
-        const ty = cy + Math.sin(m.angle - m.speed * 8) * r + m.offsetY;
-        oCtx.fillStyle = m.warm
-          ? `rgba(232, 114, 58, ${alpha * 0.2})`
-          : `rgba(58, 142, 232, ${alpha * 0.15})`;
-        oCtx.beginPath();
-        oCtx.arc(tx, ty, m.size * 0.5, 0, Math.PI * 2);
-        oCtx.fill();
-      });
-
-      rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", resizeParticleCanvas);
-      cancelAnimationFrame(rafId);
-      document.documentElement.classList.remove("cursor-active");
-    };
-  }, []);
-
-  // Airflow lines
-  useEffect(() => {
-    const container = airflowContainerRef.current;
-    if (!container) return;
-
-    const spawn = () => {
-      const line = document.createElement("div");
-      line.className = styles.airflowLine;
-      line.style.top = Math.random() * 100 + "vh";
-      line.style.width = Math.random() * 200 + 100 + "px";
-      line.style.animationDuration = (Math.random() * 6 + 6) + "s";
-      line.style.animationDelay = Math.random() * 4 + "s";
-      container.appendChild(line);
-      line.addEventListener("animationend", () => line.remove());
-    };
-
-    const interval = setInterval(spawn, 3000);
-    for (let i = 0; i < 3; i++) spawn();
-    return () => clearInterval(interval);
-  }, []);
-
-  // Intersection observer for CTA section
-  useEffect(() => {
-    const el = ctaTextRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setCtaVisible(true);
-      });
-    }, { threshold: 0.3 });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
+export default function OperatorHome() {
   return (
-    <div className={styles.root}>
-      {/* Custom cursor — hidden until first mousemove */}
-      <div
-        ref={cursorDotRef}
-        className={`${styles.cursorDot} ${cursorVisible ? styles.cursorActive : ""} ${hovering ? styles.cursorDotHover : ""}`}
-      />
-      <div
-        ref={cursorRingRef}
-        className={`${styles.cursorRing} ${cursorVisible ? styles.cursorActive : ""} ${hovering ? styles.cursorRingHover : ""}`}
-      />
-      <div
-        ref={cursorThermalRef}
-        className={`${styles.cursorThermal} ${cursorVisible ? styles.cursorActive : ""}`}
-      />
-
-      {/* Background video — deferred until after first paint */}
-      <div className={styles.videoBg}>
-        {videoReady && (
-          <video autoPlay muted loop playsInline preload="metadata">
-            <source
-              src="https://videos.pexels.com/video-files/5327935/5327935-sd_640_360_30fps.mp4"
-              type="video/mp4"
-            />
-          </video>
-        )}
-      </div>
-
-      {/* Background layers — grid + noise come from globals body::before/after */}
-      <canvas ref={particleCanvasRef} className={styles.particleCanvas} />
-      <div ref={airflowContainerRef} className={styles.airflowLines} />
-
-      {/* Top nav */}
-      <nav className={styles.nav}>
-        <div className={styles.navBrand}>
-          Field<span>Pass</span>
-        </div>
-        <div className={styles.navLinks}>
-          {[
-            { href: "/who-we-are", label: "Who We Are" },
-            { href: "/what-we-do", label: "What We Do" },
-            { href: "/servicetitan", label: "ServiceTitan" },
-            { href: "/why-we-do-it", label: "Why" },
-            { href: "/demos", label: "Demos" },
-          ].map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={styles.navLink}
-              onMouseEnter={() => setHovering(true)}
-              onMouseLeave={() => setHovering(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className={styles.navStatus}>
-            <div className={styles.statusDot} />
-            <span>Accepting Partners</span>
-          </div>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          <span className={styles.hamburgerLine} />
-          <span className={styles.hamburgerLine} />
-          <span className={styles.hamburgerLine} />
-        </button>
-      </nav>
-
-      {/* Mobile overlay */}
-      {menuOpen && (
-        <div className={styles.mobileOverlay}>
-          {[
-            { href: "/who-we-are", label: "Who We Are" },
-            { href: "/what-we-do", label: "What We Do" },
-            { href: "/servicetitan", label: "ServiceTitan" },
-            { href: "/why-we-do-it", label: "Why We Do It" },
-            { href: "/demos", label: "Demos" },
-          ].map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={styles.mobileOverlayLink}
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className={styles.mobileOverlayDivider} />
-          <a
-            href="mailto:charles@fieldpass.pro"
-            className={styles.mobileOverlayLink}
-            onClick={() => setMenuOpen(false)}
-          >
-            Contact Us
-          </a>
-        </div>
-      )}
-
+    <OperatorLayout>
       {/* Hero */}
       <section className={styles.hero}>
-        <div className={styles.logoContainer}>
-          <div className={styles.orbWrapper}>
-            <canvas
-              ref={orbCanvasRef}
-              className={styles.orbCanvas}
-              width={200}
-              height={200}
+        <div className={styles.heroLeft}>
+          <div className={styles.eyebrow}>Software for HVAC Operators</div>
+          <h1 className={styles.heroTitle}>
+            Better software for your shop. <span className={styles.accent}>Without the BS.</span>
+          </h1>
+          <p className={styles.heroSub}>
+            We help HVAC and plumbing owners pick, switch, and actually use the
+            software that runs their business. No long contracts. No
+            consultant-speak. Just the work.
+          </p>
+          <div className={styles.heroCtas}>
+            <Link href="/servicetitan" className={styles.ctaPrimary}>
+              See ServiceTitan Migrations
+            </Link>
+            <a href="tel:+14157130070" className={styles.ctaSecondary}>
+              Or call (415) 713-0070
+            </a>
+          </div>
+          <div className={styles.heroOutcomes}>
+            {["Time saved", "Headaches removed", "Client satisfaction up", "Client volume up"].map((label) => (
+              <div key={label} className={styles.outcomePill}>
+                <span className={styles.outcomeCheck}>✓</span>
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.heroRight}>
+          <video
+            className={styles.heroImg}
+            src="https://videos.pexels.com/video-files/5327935/5327935-sd_640_360_30fps.mp4"
+            poster="https://images.pexels.com/photos/4078347/pexels-photo-4078347.jpeg?auto=compress&cs=tinysrgb&w=900&h=1100&fit=crop"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="HVAC ventilation system in motion"
+          />
+          <div className={styles.heroBadge}>
+            <div className={styles.heroBadgeLabel}>Skin in the game</div>
+            <div className={styles.heroBadgeSub}>Built by operators, for operators</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform compatibility strip */}
+      <section className={styles.trustStrip}>
+        <div className={styles.trustText}>We work with the platforms you already use</div>
+        <div className={styles.trustLogos}>
+          <div className={styles.trustLogo}>SERVICETITAN</div>
+          <div className={styles.trustLogo}>HOUSECALL PRO</div>
+          <div className={styles.trustLogo}>QUICKBOOKS</div>
+          <div className={styles.trustLogo}>SERVICEFUSION</div>
+          <div className={styles.trustLogo}>STRIPE</div>
+        </div>
+      </section>
+
+      {/* Services overview */}
+      <section className={styles.servicesSection}>
+        <div className={styles.sectionInner}>
+          <div className={styles.eyebrow}>What we do</div>
+          <h2 className={styles.h2}>Four ways we help your shop run better.</h2>
+          <p className={styles.lede}>
+            Whatever's slowing you down — bad software, manual workflows, a botched
+            ServiceTitan rollout — we have a way through it.
+          </p>
+          <div className={styles.servicesGrid}>
+            {SERVICES.map((s) => (
+              <Link
+                key={s.title}
+                href={s.href}
+                className={`${styles.serviceCard} ${s.featured ? styles.serviceCardFeatured : ""}`}
+              >
+                {s.featured && <div className={styles.servicePill}>Most popular</div>}
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+                <span className={styles.serviceArrow}>Learn more →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Principles — how we're different */}
+      <section className={styles.testimonialSection}>
+        <div className={styles.sectionInner}>
+          <div className={styles.eyebrow}>How we&apos;re different</div>
+          <h2 className={styles.h2}>Three things you won&apos;t get from a typical consultant.</h2>
+          <div className={styles.principlesGrid}>
+            {PRINCIPLES.map((p) => (
+              <div key={p.title} className={styles.principleCard}>
+                <div className={styles.principleIcon}>{p.icon}</div>
+                <h3 className={styles.principleTitle}>{p.title}</h3>
+                <p className={styles.principleBody}>{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About the founders */}
+      <section className={styles.aboutSection}>
+        <div className={styles.aboutInner}>
+          <div className={styles.aboutLeft}>
+            <div className={styles.eyebrow}>Who we are</div>
+            <h2 className={styles.h2}>Three guys. One mission.</h2>
+            <p className={styles.aboutText}>
+              FieldPass was started by Jack, Kunal, and Charles — three friends
+              who spent years working in the field service and software worlds.
+              We watched too many HVAC owners get burned by bad software and
+              expensive consultants who didn&apos;t understand the trades.
+            </p>
+            <p className={styles.aboutText}>
+              So we built a different kind of company. No lock-in contracts.
+              No six-figure retainers. Just direct work with operators who want
+              their business to run better.
+            </p>
+            <Link href="/who-we-are" className={styles.ctaSecondary}>
+              Meet the team →
+            </Link>
+          </div>
+          <div className={styles.aboutRight}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg?auto=compress&cs=tinysrgb&w=900&h=1100&fit=crop"
+              alt="Harvard Business School"
+              className={styles.aboutImg}
             />
           </div>
-          <h1 className={styles.logoWordmark}>
-            Field<span className={styles.logoAccent}>Pass</span>
-          </h1>
         </div>
+      </section>
 
-        <div className={styles.taglineContainer}>
-          <p className={styles.tagline}>
-            Transform your <em className={styles.taglineAccent}>HVAC</em>{" "}
-            services
+      {/* Final CTA */}
+      <section className={styles.finalCta}>
+        <div className={styles.finalCtaInner}>
+          <h2 className={styles.finalCtaTitle}>Ready to talk?</h2>
+          <p className={styles.finalCtaSub}>
+            Call us, email us, or book a free audit. The first conversation is
+            always free, no strings.
           </p>
-        </div>
-
-        <div className={styles.thermalBar} />
-
-        <div className={styles.ctaContainer}>
-          <a
-            href="mailto:charles@fieldpass.pro"
-            className={styles.ctaBtn}
-            onMouseEnter={() => setHovering(true)}
-            onMouseLeave={() => setHovering(false)}
-          >
-            Learn More <span className={styles.ctaArrow}>→</span>
-          </a>
-        </div>
-
-        <div className={styles.bottomStrip}>
-          <div className={styles.stripItem}>
-            <strong>QB</strong> → <strong>ServiceTitan</strong>
+          <div className={styles.finalCtaGrid}>
+            <a href="tel:+14157130070" className={styles.finalCtaCard}>
+              <div className={styles.finalCtaIcon}>📞</div>
+              <div className={styles.finalCtaCardTitle}>Call us</div>
+              <div className={styles.finalCtaCardValue}>(415) 713-0070</div>
+              <div className={styles.finalCtaCardSub}>Mon–Fri, 8am–6pm ET</div>
+            </a>
+            <a href="mailto:charles@fieldpass.pro" className={styles.finalCtaCard}>
+              <div className={styles.finalCtaIcon}>✉️</div>
+              <div className={styles.finalCtaCardTitle}>Email us</div>
+              <div className={styles.finalCtaCardValue}>charles@fieldpass.pro</div>
+              <div className={styles.finalCtaCardSub}>We reply within 24 hours</div>
+            </a>
           </div>
-          <div className={styles.stripItem}>AI-Powered Migration</div>
-          <div className={styles.stripItem}>10-Week Engagement</div>
         </div>
       </section>
-
-      {/* Marquee */}
-      <div className={styles.marqueeContainer}>
-        <div className={styles.marqueeTrack}>
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <div key={i} className={styles.marqueeItem}>
-              <span className={styles.marqueeDot} /> {item}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Founder CTA */}
-      <section className={styles.ctaSection}>
-        <p
-          ref={ctaTextRef}
-          className={`${styles.ctaSectionText} ${
-            ctaVisible ? styles.ctaSectionTextVisible : ""
-          }`}
-        >
-          <strong>Jack, Kunal, and Charles</strong> started FieldPass to help
-          HVAC companies stop wasting time on bad software. Your next chapter
-          starts when the clipboard becomes a dashboard. Let's get you there.
-        </p>
-        <a
-          href="mailto:charles@fieldpass.pro"
-          className={styles.ctaBtn}
-          onMouseEnter={() => setHovering(true)}
-          onMouseLeave={() => setHovering(false)}
-        >
-          Become a Partner <span className={styles.ctaArrow}>→</span>
-        </a>
-      </section>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <p className={styles.footerText}>
-          © 2026 FieldPass — Built for the trades that build everything else
-        </p>
-      </footer>
-    </div>
+    </OperatorLayout>
   );
 }
