@@ -6,35 +6,22 @@
       <stop offset="65%" stop-color="#8a3ae8"/>
       <stop offset="100%" stop-color="#3a8ee8"/>
     </linearGradient>
-    <linearGradient id="passGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#e8723a"/>
-      <stop offset="50%" stop-color="#c84a8e"/>
-      <stop offset="100%" stop-color="#8a3ae8"/>
-    </linearGradient>
   </defs>
 
-  <!-- Wordmark: "Field" is white with black outline (works on light + dark bg);
-       "Pass" uses thermal gradient with thin dark outline for contrast on light bg. -->
+  <!-- Wordmark: full thermal gradient — readable on light AND dark backgrounds -->
   <text x="0" y="92"
         font-family="'Instrument Serif', 'Times New Roman', Georgia, serif"
         font-size="84"
         font-weight="400"
-        style="paint-order: stroke fill;"
-        stroke="#0a0c10"
-        stroke-width="2.5"
-        stroke-linejoin="round"
-        fill="#ffffff">Field<tspan fill="url(#passGrad)" stroke="none">Pass</tspan></text>
+        fill="url(#thermal)">FieldPass</text>
 
   <!-- Thermal bar -->
   <rect x="2" y="108" width="280" height="3" rx="1.5" fill="url(#thermal)"/>
 
-  <!-- Tagline: white fill + thin dark outline so it reads on both backgrounds -->
+  <!-- Tagline: brand orange — high contrast on both white and dark bgs -->
   <text x="2" y="138"
         font-family="'DM Mono', 'Courier New', monospace"
         font-size="14"
         letter-spacing="2"
-        style="paint-order: stroke fill;"
-        stroke="#0a0c10"
-        stroke-width="0.8"
-        fill="#ffffff">SOFTWARE FOR HVAC OPERATORS</text>
+        fill="#e8723a">SOFTWARE FOR HVAC OPERATORS</text>
 </svg>
