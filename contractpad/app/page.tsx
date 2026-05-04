@@ -104,7 +104,8 @@ export default function OperatorHome() {
           <div className={styles.trustLogo}>SERVICETITAN</div>
           <div className={styles.trustLogo}>HOUSECALL PRO</div>
           <div className={styles.trustLogo}>QUICKBOOKS</div>
-          <div className={styles.trustLogo}>SERVICEFUSION</div>
+          <div className={styles.trustLogo}>BUILDOPS</div>
+          <div className={styles.trustLogo}>JOBBER</div>
           <div className={styles.trustLogo}>STRIPE</div>
         </div>
       </section>

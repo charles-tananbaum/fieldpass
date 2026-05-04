@@ -128,7 +128,7 @@ export default function OperatorServiceTitanPage() {
           <div className={styles.trustLogos}>
             <div className={styles.trustLogo}>HOUSECALL PRO</div>
             <div className={styles.trustLogo}>QUICKBOOKS</div>
-            <div className={styles.trustLogo}>SERVICEFUSION</div>
+            <div className={styles.trustLogo}>BUILDOPS</div>
             <div className={styles.trustLogo}>FIELDEDGE</div>
             <div className={styles.trustLogo}>JOBBER</div>
           </div>

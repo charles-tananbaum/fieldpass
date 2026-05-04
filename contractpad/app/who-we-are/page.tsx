@@ -8,19 +8,19 @@ const FOUNDERS = [
     photo: "/founders/jack.jpeg",
     name: "Jack",
     role: "Co-Founder · Strategy",
-    bio: "Jack spent four years working with HVAC contractors and field service businesses. He learned from the inside how shops actually run — the dispatching, the back office, the busy days, the bad days.",
+    bio: "Jack has spent the last four years working with HVAC technology businesses and vertical SaaS companies, engaging directly with contractor customers. He knows how shops actually run — the dispatching, the back office, the busy days, the bad ones — because he's spent his career listening to the people doing the work.",
   },
   {
     photo: "/founders/kunal.jpeg",
     name: "Kunal",
     role: "Co-Founder · Product",
-    bio: "Kunal spent four years building software products used by millions of people. He's spent his career making complicated technology simple — and that's exactly what he does at FieldPass.",
+    bio: "Kunal spent four years at Yahoo building large-scale products used by millions. He turns complicated technology into tools that operators can actually use on day one — which is exactly what FieldPass needs to deliver.",
   },
   {
     photo: "/founders/charles.jpeg",
     name: "Charles",
     role: "Co-Founder · Operations",
-    bio: "Charles helped grow one of the most popular software platforms in the world. At FieldPass he makes sure everything we deliver actually saves you time and money — no fluff.",
+    bio: "Charles was a venture investor backing some of the leading AI companies of this generation before running strategic initiatives at a large developer tools company. At FieldPass he keeps the work honest: every engagement has to save real time and real money, or it doesn't ship.",
   },
 ];
 
